@@ -84,4 +84,103 @@ $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/lib
 `$ sudo apt-get install libx11-dev:i386`                  
 
 ### 配置 USB 接口 
-(Congiguring USB Access)
+
+在 GNU/Linux systems 系统下，（尤其是 Ubuntu 系统），通常用户在默认情况下不能直接读取 USB 设备。我们要对系统进行配置才能允许这种操作。                     
+
+推荐的做法是创建一个文件 /etc/udev/rules.d/51-android.rules （作为 root 用户），接着将下面对内容复制上去。 <username> 必须被替换成实际被授权通过 USB 访问手机的用户名。                      
+
+｀                
+# adb protocol on passion (Nexus One)               
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4e12", MODE="0600", OWNER="<username>"           
+# fastboot protocol on passion (Nexus One)                 
+SUBSYSTEM=="usb", ATTR{idVendor}=="0bb4", ATTR{idProduct}=="0fff", MODE="0600", OWNER="<username>"              
+# adb protocol on crespo/crespo4g (Nexus S)               
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4e22", MODE="0600", OWNER="<username>"            
+# fastboot protocol on crespo/crespo4g (Nexus S)          
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4e20", MODE="0600", OWNER="<username>"            
+# adb protocol on stingray/wingray (Xoom)                
+SUBSYSTEM=="usb", ATTR{idVendor}=="22b8", ATTR{idProduct}=="70a9", MODE="0600", OWNER="<username>"            
+# fastboot protocol on stingray/wingray (Xoom)                
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="708c", MODE="0600", OWNER="<username>"              
+# adb protocol on maguro/toro (Galaxy Nexus)              
+SUBSYSTEM=="usb", ATTR{idVendor}=="04e8", ATTR{idProduct}=="6860", MODE="0600", OWNER="<username>"            
+# fastboot protocol on maguro/toro (Galaxy Nexus)            
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4e30", MODE="0600", OWNER="<username>"              
+# adb protocol on panda (PandaBoard)                
+SUBSYSTEM=="usb", ATTR{idVendor}=="0451", ATTR{idProduct}=="d101", MODE="0600", OWNER="<username>"             
+# adb protocol on panda (PandaBoard ES)                  
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="d002", MODE="0600", OWNER="<username>"              
+# fastboot protocol on panda (PandaBoard)                 
+SUBSYSTEM=="usb", ATTR{idVendor}=="0451", ATTR{idProduct}=="d022", MODE="0600", OWNER="<username>"             
+# usbboot protocol on panda (PandaBoard)                   
+SUBSYSTEM=="usb", ATTR{idVendor}=="0451", ATTR{idProduct}=="d00f", MODE="0600", OWNER="<username>"              
+# usbboot protocol on panda (PandaBoard ES)                
+SUBSYSTEM=="usb", ATTR{idVendor}=="0451", ATTR{idProduct}=="d010", MODE="0600", OWNER="<username>"              
+# adb protocol on grouper/tilapia (Nexus 7)                  
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4e42", MODE="0600", OWNER="<username>"               
+# fastboot protocol on grouper/tilapia (Nexus 7)                  
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4e40", MODE="0600", OWNER="<username>"            
+# adb protocol on manta (Nexus 10)                    
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4ee2", MODE="0600", OWNER="<username>"              
+# fastboot protocol on manta (Nexus 10)                
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4ee0", MODE="0600", OWNER="<username>"          
+｀             
+
+这些规则会在下次插入设备的时候生效。因此可能需要先拔出设备再插回去。               
+
+知道这些就可以在 Ubuntu Hardy Heron (8.04.x LTS) 和 Lucid Lynx (10.04.x LTS) 上工作。其他版本的 Ubuntu 或其他 GNU/Linux 的发行版本需要不同的设置。               
+
+### 使用一个单独的输出目录
+
+默认情况下，每个构建出来的结果都存储在系统资源目录的子文件夹 out/ 目录下。               
+
+在一些拥有多个存储设备的机器上。构建在存储源文件并输出到单独卷的时候会进行的较快。还有其他一些性能，比如可以将输出存储到一个经过速度优化的文件系统中并且不会造成稳健性崩溃，因为所有文件都可以在文件损坏的情况下被重新生成。                   
+
+要使用这种功能，配置输出 OUT_DIR_COMMON_BASE 变量指向到你存储输出数据的地方。          
+｀export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>｀           
+
+每个源代码树的输出目录都将在文件夹创建后以源码树命名。             
+
+举个例子，如果你现在有一些源代码树，比如 /source/master1 和 /source/master2 并且 OUT_DIR_COMMON_BASE 设置为 /output ，输出目录就会是 /output/master1 和 /output/master2。                 
+
+有一个重要的情况就是不能将多个源代码树输出到同一个目录并且具有相同的名称，否则他们会在同时使用同一个输出目录的时候出现不可预知的结果，然后终止。             
+
+这些仅支持 Jelly Bean (4.1) 及以上版本，包括 master 分支。          
+
+## 在 Mac OS 下搭建编译环境
+
+在默认安装下， Mac OS 运行在一个保留但不区分大小写的文件系统上。这种文件系统并不被 git 支持而且一些 git 指令 （比如 git status ）表现异常。出于此原因，我们推荐你在一个区分大小写的文件系统上工作使用 AOSP 源代码树。 使用磁盘映像可以非常容易地达到目的，讨论如下。              
+
+一旦合适的文件系统准备好，在时尚的 Mac OS 环境下构建 master 分支会变得非常容易。较早的一些分支，包括 ICS ,需要一些额外的工具和 SDK 。            
+
+### 创建一个区分大小写的磁盘映像
+
+你可以用你的 Mac OS 环境下正在使用对磁盘映像创建一个区分大小写的文件系统。为了创建这个映像，启动磁盘工具并选择 " New Image " 。完成构建最少需要 25GB ；以后可能会需要更多。使用分散的映像可以节省空间并且以后可以根据需要增大。请确定选择 “区分大小写，日志”作为卷格式。                 
+
+你也可以在 shell 里输入下面的命令来创建它。                
+
+｀# hdiutil create -type SPARSE -fs 'Case-sensitive Journaled HFS+' -size 40g ~/android.dmg｀                     
+
+这会创建一个 .dmg （或者 .dmg.sparsefile ）文件，一旦被安装，将成为具有安卓开发所需格式的驱动器。           
+
+如果你以后需要更大的空间，你可以使用下面的指令来重新设置分散映像的大小。             
+
+｀# hdiutil resize -size <new-size-you-want>g ~/android.dmg.sparseimage｀                    
+
+一个名为 android.dmg 的地盘映像被安装在你的主目录下，你可以在 ~/.bash_profile 文件中添加一个辅助功能模块。            
+
+- 执行 mountAndroid 的时候安装这个镜像文件：          
+
+｀# mount the android file image               
+  function mountAndroid { hdiutil attach ~/android.dmg -mountpoint /Volumes/android; }｀                        
+
+  注意：如果你的系统创建了一个 .dmg.sparsefile 文件，请将 -/android.dmg 替换为 -/android.dmg.sparsefile 。               
+
+- 执行 umountAndroid 的时候卸载它：              
+  ｀# unmount the android file image                     
+    function umountAndroid() { hdiutil detach /Volumes/android; }｀             
+
+一旦你安装了 android 卷，你可以在这里进行你所有的工作。也同样可以像一个外部驱动器一样直接弹出（卸载）它。                   
+
+### 安装 JDK
+
