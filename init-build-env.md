@@ -18,7 +18,7 @@
 
 Gingerbread （2.3.x） 或以上版本，包括 master 分支，都需要一个64位的环境，它之前的版本可以在32位系统下进行编译。            
 
-`Note： 参阅 [下载与构建](https://source.android.com/source/building.html)了解对硬件环境和软件环境的需求。然后参考下面对 Ubuntu 和 Mac OS 下构建的详细说明。`                             
+`提示： 参阅 [下载与构建](https://source.android.com/source/building.html)了解对硬件环境和软件环境的需求。然后参考下面对 Ubuntu 和 Mac OS 下构建的详细说明。`                             
 
 ### 安装JDK
 
@@ -44,7 +44,7 @@ Java 7：适用于最新版本的 Android
 Java 6：适用 Gingerbread 到 KitKat 的版本                      
 Java 5：适用 Cupcake 到 Froyo 的版本                          
 
-`Note: 在构建过程中的命令会确定使用的是 Sun JDK 而不是先前安装的 JDK。`                  
+`提示: 在构建过程中的命令会确定使用的是 Sun JDK 而不是先前安装的 JDK。`                  
 
 ### 安装需要的包（Ubuntu 14.04）
 
