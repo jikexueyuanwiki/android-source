@@ -57,11 +57,11 @@ Java 5：适用 Cupcake 到 Froyo 的版本
 你也许会使用 Ubuntu 12.04 来构建较早版本的 Android 。 master 分支和最近的发行都不支持 12.04 版本。             
 
 `                       
-$ sudo apt-get install git gnupg flex bison gperf build-essential \
-  zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \
-  libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \
-  libgl1-mesa-dev g++-multilib mingw32 tofrodos \
-  python-markdown libxml2-utils xsltproc zlib1g-dev:i386                            
+$ sudo apt-get install git gnupg flex bison gperf build-essential \                   
+  zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \                  
+  libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \                   
+  libgl1-mesa-dev g++-multilib mingw32 tofrodos \                          
+  python-markdown libxml2-utils xsltproc zlib1g-dev:i386                              
 $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so                 
 `                  
 
@@ -69,11 +69,11 @@ $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/lib
 
 在 Ubuntu 10.04-11.10 上构建已不在被支持，但仍可以用来构建较早的 AOSP。            
 
-`$ sudo apt-get install git gnupg flex bison gperf build-essential \
-  zip curl zlib1g-dev libc6-dev lib32ncurses5-dev ia32-libs \
-  x11proto-core-dev libx11-dev lib32readline5-dev lib32z-dev \
-  libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown \
-  libxml2-utils xsltproc`                    
+`$ sudo apt-get install git gnupg flex bison gperf build-essential \                        
+   zip curl zlib1g-dev libc6-dev lib32ncurses5-dev ia32-libs \                   
+   x11proto-core-dev libx11-dev lib32readline5-dev lib32z-dev \                     
+   libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown \                        
+   libxml2-utils xsltproc`                    
 
 在 Ubuntu 10.10 中：
 
