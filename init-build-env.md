@@ -208,3 +208,125 @@ export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>
 要在 Mac OS 环境下构建最新版本的源代码，你需要一台具备 Intel/x86 的机器并且系统在 Mac OS X v10.8 （Mountain Lion）或以上， Xcode 版本在4.5.2以上并包含命令行工具。               
 
 ### 5.0.x 及其之前的分支
+
+要在 Mac OS 环境下构建 5.0.x 及其之前的源码，你需要一台具备 Intel/x86 的机器并且系统在 Mac OS X v10.8 （Mountain Lion）或以上， Xcode 版本在4.5.2以上并包含命令行工具。                  
+
+### 4.4.x 及其之前的分支
+
+要在 Mac OS 环境下构建 4.2.x 及其之前的源代码， 你需要一台 Intel/x86 的机器并且系统为 Mac OS X v10.6 (Snow leopard) 或 Mac OS X v10.7 (Lion)，具备 Xcode 4.2 （苹果开发者工具）。尽管 Lion 系统并不事先具备 JDK，但它会在你尝试构建源码的时候自动安装。                    
+
+剩下的关于 Mac OS 的内容只针对那些希望构建较早分支的用户。              
+
+### 4.0.x 及其之前的分支
+
+要在 Mac OS 环境下构建 android-4.0.x 及其之前的版本分支，你需要一台 Intel/x86 的机器并且运行 Mac OS X v10.5 (Leopard) 系统或 Mac OS X v10.6 (Snow Leopard) 系统，同时你将需要 Mac OS X v10.5 的 SDK 。              
+
+#### 安装需要的包
+
+－ 从 [ Apple 开发者平台](https://developer.apple.com/)获取安装 Xcode。我们推荐 3.1.4 或更新版本 （比如 gcc 4.2）。4.x 的版本可能会造成困难。如果你还没有准备好注册成为 Apple 开发者，则需要创建一个 Apple ID 来进行下载。            
+
+－ 从 [macports.org](http://www.macports.org/install.php)获取 MacPorts 的安装。                 
+  注意：确保在你的 /usr/bin 路径之前存在 /opt/local/bin 路径。如果没有，请将下面的内容添加到你的 ~/.bash_profile 文件中：                
+
+```
+export PATH=/opt/local/bin:$PATH
+```                 
+
+  注意：如果在你的主目录下没有 .bash_profile 文件，那就创建一个。              
+
+－ 从 MacPorts 上获取 make , git 和 GPG 包的安装：               
+
+```
+$ POSIXLY_CORRECT=1 sudo port install gmake libsdl git gnupg
+```                
+
+如果使用的是 Mac OS X v10.4 ，还需要安装 bison：             
+
+```
+$ POSIXLY_CORRECT=1 sudo port install bison
+```                        
+
+#### 从 make 3.82 中恢复
+
+在 Android ICS 之前的版本，存在一个 bug 阻止了 android 的构建。你可以按照下面的步骤使用 MacPorts 安装 3.81 版本：                 
+
+－ 编辑 /opt/local/etc/macports/sources.conf 并添加下面一行内容   
+
+```
+file:///Users/Shared/dports
+```            
+
+添加完上面一行。之后创建这样一个目录： 
+
+```
+$ mkdir /Users/Shared/dports
+```                 
+
+-  在新的 dports 目录中，运行     
+
+```
+$ svn co --revision 50980 http://svn.macports.org/repository/macports/trunk/dports/devel/gmake/ devel/gmake/
+```               
+
+－ 为你的本地仓库创建一个端口：         
+
+```
+$ portindex /Users/Shared/dports
+```            
+
+－ 最后，输入下面的指令安装旧版的 gmake         
+
+```
+$ sudo port install gmake @3.81
+```               
+
+#### 设置文件描述限制符
+
+在 Mac OS 上，默认的文件同时打开数量值太低，所以一个高并发的构建会超出这个限制。          
+
+为了增加这个上限，将下面的一行添加到你的 -/.bash_profile 文件中： 
+
+```
+# set the number of open files to be 1024
+ulimit -S -n 1024
+```                  
+
+## 优化构建环境（可选）
+
+### 建立 ccache
+
+你可以选择性的让构建使用 ccache 汇编工具。 Ccache 作为一个编译缓存器可以用来为重构建提速。如果你经常使用 make clean ，或者经常切换不同的工程进行构建的话，这将会非常好用。                  
+
+在你的 .bashrc （或其它同类文件）中添加下面一行：   
+
+```
+export USE_CCACHE=1
+```                    
+
+默认情况下 cache 会被存储在 ~/.ccache 下。如果你的主目录在 NFS 活着其它非本地系统上，你也同样需要在你的 .bashrc 文件中指定目录。         
+
+```
+export CCACHE_DIR=<path-to-your-cache-directory>
+```                     
+
+建议缓存大小设为 50 － 100 GB 之间。在你下载好源代码之后运行下面的指令：               
+
+```
+prebuilts/misc/linux-x86/ccache/ccache -M 50G
+```                   
+
+在 Mac OS 中，你应该将 linux-x86 替换为 darwin-x86 ：               
+
+```
+prebuilts/misc/darwin-x86/ccache/ccache -M 50G
+```                    
+
+在构建 Ice Cream Sandwich (4.0.x) 或更早版本的时候，ccache 会在一个不同的位置下：                
+
+```
+prebuilt/linux-x86/ccache/ccache -M 50G
+```               
+
+这些设置被存储在 CCACHE_DIR 并且一直生效。                   
+
+你的编译环境已经准备好了，接下来[下载源代码吧](https://source.android.com/source/downloading.html)。
