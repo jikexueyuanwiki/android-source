@@ -199,3 +199,12 @@ export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>
 
 ### 安装 JDK
 
+[ Android 开源工程 (AOSP)](https://android.googlesource.com/) 中 Android 的 master 和 5.0.x 分支需要 Java 7。在 Mac OS 中，使用 [jdk-7u71-macosx-x64.dmg](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html#jdk-7u71-oth-JPR)。               
+
+要开发 Android Gingerbread 到 KitKat 之间的版本，下载并安装 [Java JDK](http://support.apple.com/kb/dl1572) 的 Java 6 版本。                
+
+### master 分支
+
+要在 Mac OS 环境下构建最新版本的源代码，你需要一台具备 Intel/x86 的机器并且系统在 Mac OS X v10.8 （Mountain Lion）或以上， Xcode 版本在4.5.2以上并包含命令行工具。               
+
+### 5.0.x 及其之前的分支
