@@ -56,14 +56,14 @@ Java 5：适用 Cupcake 到 Froyo 的版本
 
 你也许会使用 Ubuntu 12.04 来构建较早版本的 Android 。 master 分支和最近的发行都不支持 12.04 版本。             
 
-`                       
+```                       
 $ sudo apt-get install git gnupg flex bison gperf build-essential \                   
   zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \                  
   libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \                   
   libgl1-mesa-dev g++-multilib mingw32 tofrodos \                          
   python-markdown libxml2-utils xsltproc zlib1g-dev:i386                              
 $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so                 
-`                  
+```                             
 
 ### 安装需要的包（Ubuntu 10.04 -- 11.10）
 
@@ -89,7 +89,7 @@ $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/lib
 
 推荐的做法是创建一个文件 /etc/udev/rules.d/51-android.rules （作为 root 用户），接着将下面对内容复制上去。 <username> 必须被替换成实际被授权通过 USB 访问手机的用户名。                      
 
-｀                
+```                  
 # adb protocol on passion (Nexus One)               
 SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4e12", MODE="0600", OWNER="<username>"           
 # fastboot protocol on passion (Nexus One)                 
@@ -124,7 +124,7 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4e40", MODE="0600", 
 SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4ee2", MODE="0600", OWNER="<username>"              
 # fastboot protocol on manta (Nexus 10)                
 SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4ee0", MODE="0600", OWNER="<username>"          
-｀             
+```                            
 
 这些规则会在下次插入设备的时候生效。因此可能需要先拔出设备再插回去。               
 
