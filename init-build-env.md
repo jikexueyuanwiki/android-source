@@ -44,7 +44,7 @@ Java 7：适用于最新版本的 Android
 Java 6：适用 Gingerbread 到 KitKat 的版本                      
 Java 5：适用 Cupcake 到 Froyo 的版本                          
 
-`提示: 在构建过程中的命令会确定使用的是 Sun JDK 而不是先前安装的 JDK。`                  
+提示: 在构建过程中的命令会确定使用的是 Sun JDK 而不是先前安装的 JDK。                 
 
 ### 安装需要的包（Ubuntu 14.04）
 
