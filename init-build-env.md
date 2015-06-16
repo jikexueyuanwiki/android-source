@@ -69,19 +69,25 @@ $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/lib
 
 在 Ubuntu 10.04-11.10 上构建已不在被支持，但仍可以用来构建较早的 AOSP。            
 
-`$ sudo apt-get install git gnupg flex bison gperf build-essential \                        
+```
+ $ sudo apt-get install git gnupg flex bison gperf build-essential \                        
    zip curl zlib1g-dev libc6-dev lib32ncurses5-dev ia32-libs \                   
    x11proto-core-dev libx11-dev lib32readline5-dev lib32z-dev \                     
    libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown \                        
-   libxml2-utils xsltproc`                    
+   libxml2-utils xsltproc
+```                   
 
 在 Ubuntu 10.10 中：
 
-`$ sudo ln -s /usr/lib32/mesa/libGL.so.1 /usr/lib32/mesa/libGL.so`            
+```
+$ sudo ln -s /usr/lib32/mesa/libGL.so.1 /usr/lib32/mesa/libGL.so
+```            
 
 在 Ubuntu 11.10 中：
 
-`$ sudo apt-get install libx11-dev:i386`                  
+```
+$ sudo apt-get install libx11-dev:i386
+```                 
 
 ### 配置 USB 接口 
 
@@ -137,7 +143,9 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4ee0", MODE="0600", 
 在一些拥有多个存储设备的机器上。构建在存储源文件并输出到单独卷的时候会进行的较快。还有其他一些性能，比如可以将输出存储到一个经过速度优化的文件系统中并且不会造成稳健性崩溃，因为所有文件都可以在文件损坏的情况下被重新生成。                   
 
 要使用这种功能，配置输出 OUT_DIR_COMMON_BASE 变量指向到你存储输出数据的地方。          
-｀export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>｀           
+```
+export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>
+```    
 
 每个源代码树的输出目录都将在文件夹创建后以源码树命名。             
 
@@ -159,26 +167,33 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4ee0", MODE="0600", 
 
 你也可以在 shell 里输入下面的命令来创建它。                
 
-｀# hdiutil create -type SPARSE -fs 'Case-sensitive Journaled HFS+' -size 40g ~/android.dmg｀                     
+```
+# hdiutil create -type SPARSE -fs 'Case-sensitive Journaled HFS+' -size 40g ~/android.dmg
+```               
 
 这会创建一个 .dmg （或者 .dmg.sparsefile ）文件，一旦被安装，将成为具有安卓开发所需格式的驱动器。           
 
 如果你以后需要更大的空间，你可以使用下面的指令来重新设置分散映像的大小。             
-
-｀# hdiutil resize -size <new-size-you-want>g ~/android.dmg.sparseimage｀                    
+```
+# hdiutil resize -size <new-size-you-want>g ~/android.dmg.sparseimage
+```                    
 
 一个名为 android.dmg 的地盘映像被安装在你的主目录下，你可以在 ~/.bash_profile 文件中添加一个辅助功能模块。            
 
 - 执行 mountAndroid 的时候安装这个镜像文件：          
 
-｀# mount the android file image               
-  function mountAndroid { hdiutil attach ~/android.dmg -mountpoint /Volumes/android; }｀                        
+```
+# mount the android file image               
+  function mountAndroid { hdiutil attach ~/android.dmg -mountpoint /Volumes/android; }
+```                     
 
   注意：如果你的系统创建了一个 .dmg.sparsefile 文件，请将 -/android.dmg 替换为 -/android.dmg.sparsefile 。               
 
-- 执行 umountAndroid 的时候卸载它：              
-  ｀# unmount the android file image                     
-    function umountAndroid() { hdiutil detach /Volumes/android; }｀             
+- 执行 umountAndroid 的时候卸载它： 
+```             
+  # unmount the android file image                     
+    function umountAndroid() { hdiutil detach /Volumes/android; }
+```             
 
 一旦你安装了 android 卷，你可以在这里进行你所有的工作。也同样可以像一个外部驱动器一样直接弹出（卸载）它。                   
 
