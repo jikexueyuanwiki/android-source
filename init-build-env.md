@@ -223,9 +223,9 @@ export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>
 
 #### 安装需要的包
 
-－ 从 [ Apple 开发者平台](https://developer.apple.com/)获取安装 Xcode。我们推荐 3.1.4 或更新版本 （比如 gcc 4.2）。4.x 的版本可能会造成困难。如果你还没有准备好注册成为 Apple 开发者，则需要创建一个 Apple ID 来进行下载。            
+- 从 [ Apple 开发者平台](https://developer.apple.com/)获取安装 Xcode。我们推荐 3.1.4 或更新版本 （比如 gcc 4.2）。4.x 的版本可能会造成困难。如果你还没有准备好注册成为 Apple 开发者，则需要创建一个 Apple ID 来进行下载。            
 
-－ 从 [macports.org](http://www.macports.org/install.php)获取 MacPorts 的安装。                 
+- 从 [macports.org](http://www.macports.org/install.php)获取 MacPorts 的安装。                 
   注意：确保在你的 /usr/bin 路径之前存在 /opt/local/bin 路径。如果没有，请将下面的内容添加到你的 ~/.bash_profile 文件中：                
 
 ```
@@ -234,7 +234,7 @@ export PATH=/opt/local/bin:$PATH
 
   注意：如果在你的主目录下没有 .bash_profile 文件，那就创建一个。              
 
-－ 从 MacPorts 上获取 make , git 和 GPG 包的安装：               
+- 从 MacPorts 上获取 make , git 和 GPG 包的安装：               
 
 ```
 $ POSIXLY_CORRECT=1 sudo port install gmake libsdl git gnupg
@@ -250,7 +250,7 @@ $ POSIXLY_CORRECT=1 sudo port install bison
 
 在 Android ICS 之前的版本，存在一个 bug 阻止了 android 的构建。你可以按照下面的步骤使用 MacPorts 安装 3.81 版本：                 
 
-－ 编辑 /opt/local/etc/macports/sources.conf 并添加下面一行内容   
+- 编辑 /opt/local/etc/macports/sources.conf 并添加下面一行内容   
 
 ```
 file:///Users/Shared/dports
@@ -262,19 +262,19 @@ file:///Users/Shared/dports
 $ mkdir /Users/Shared/dports
 ```                 
 
--  在新的 dports 目录中，运行     
+- 在新的 dports 目录中，运行     
 
 ```
 $ svn co --revision 50980 http://svn.macports.org/repository/macports/trunk/dports/devel/gmake/ devel/gmake/
 ```               
 
-－ 为你的本地仓库创建一个端口：         
+- 为你的本地仓库创建一个端口：         
 
 ```
 $ portindex /Users/Shared/dports
 ```            
 
-－ 最后，输入下面的指令安装旧版的 gmake         
+- 最后，输入下面的指令安装旧版的 gmake         
 
 ```
 $ sudo port install gmake @3.81
