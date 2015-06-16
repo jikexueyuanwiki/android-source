@@ -18,7 +18,7 @@
 
 Gingerbread （2.3.x） 或以上版本，包括 master 分支，都需要一个64位的环境，它之前的版本可以在32位系统下进行编译。            
 
-`提示： 参阅 [下载与构建](https://source.android.com/source/building.html)了解对硬件环境和软件环境的需求。然后参考下面对 Ubuntu 和 Mac OS 下构建的详细说明。`                             
+提示： 参阅 [下载与构建](https://source.android.com/source/building.html)了解对硬件环境和软件环境的需求。然后参考下面对 Ubuntu 和 Mac OS 下构建的详细说明。                                         
 
 ### 安装JDK
 
@@ -26,17 +26,17 @@ Gingerbread （2.3.x） 或以上版本，包括 master 分支，都需要一个
 
 Java 7：适用于最新版本的 Android                
 
-`                          
+```                          
   $ sudo apt-get update                           
   $ sudo apt-get install openjdk-7-jdk                    
-`                       
+```                       
 
 也可以运行如下指令升级默认的 Java 版本：           
 
-`                   
+```                   
   sudo update-alternatives --config java                  
   sudo update-alternatives --config javac                 
-`                   
+```                   
 
 如果你遇到 Java 版本错误，参考 [wrong-java-version](https://source.android.com/source/building-running.html#wrong-java-version) 中描述的来设置它的路径。                  
 
@@ -50,19 +50,21 @@ Java 5：适用 Cupcake 到 Froyo 的版本
 
 你将需要一个64位版本的 Ubuntu 。推荐 Ubuntu 14.04。                
 
-`  $ sudo apt-get install bison g++-multilib git gperf libxml2-utils make zlib1g-dev:i386 zip`               
+```
+  $ sudo apt-get install bison g++-multilib git gperf libxml2-utils make zlib1g-dev:i386 zip
+```               
 
 ### 安装需要的包（Ubuntu 12.04）
 
 你也许会使用 Ubuntu 12.04 来构建较早版本的 Android 。 master 分支和最近的发行都不支持 12.04 版本。             
 
 ```                       
-   $ sudo apt-get install git gnupg flex bison gperf build-essential \                   
-     zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \                  
-     libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \                   
-     libgl1-mesa-dev g++-multilib mingw32 tofrodos \                          
-     python-markdown libxml2-utils xsltproc zlib1g-dev:i386                              
-   $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so                 
+  $ sudo apt-get install git gnupg flex bison gperf build-essential \                   
+    zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \                  
+    libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \                   
+    libgl1-mesa-dev g++-multilib mingw32 tofrodos \                          
+    python-markdown libxml2-utils xsltproc zlib1g-dev:i386                              
+  $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so                 
 ```                             
 
 ### 安装需要的包（Ubuntu 10.04 -- 11.10）
@@ -70,23 +72,23 @@ Java 5：适用 Cupcake 到 Froyo 的版本
 在 Ubuntu 10.04-11.10 上构建已不在被支持，但仍可以用来构建较早的 AOSP。            
 
 ```
-   $ sudo apt-get install git gnupg flex bison gperf build-essential \                        
-     zip curl zlib1g-dev libc6-dev lib32ncurses5-dev ia32-libs \                   
-     x11proto-core-dev libx11-dev lib32readline5-dev lib32z-dev \                     
-     libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown \                        
-     libxml2-utils xsltproc
+  $ sudo apt-get install git gnupg flex bison gperf build-essential \                        
+    zip curl zlib1g-dev libc6-dev lib32ncurses5-dev ia32-libs \                   
+    x11proto-core-dev libx11-dev lib32readline5-dev lib32z-dev \                     
+    libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown \                        
+    libxml2-utils xsltproc
 ```                   
 
 在 Ubuntu 10.10 中：
 
 ```
-   $ sudo ln -s /usr/lib32/mesa/libGL.so.1 /usr/lib32/mesa/libGL.so
+  $ sudo ln -s /usr/lib32/mesa/libGL.so.1 /usr/lib32/mesa/libGL.so
 ```            
 
 在 Ubuntu 11.10 中：
 
 ```
-   $ sudo apt-get install libx11-dev:i386
+  $ sudo apt-get install libx11-dev:i386
 ```                 
 
 ### 配置 USB 接口 
