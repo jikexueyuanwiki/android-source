@@ -79,4 +79,102 @@
  $ repo init -u https://android.googlesource.com/a/platform/manifest
  ```              
 
-## Troubleshooting network issues
+ ## 排除网络问题
+
+ 当通过代理下载的时候（通常企业经常使用），需要去用 repo 明确地指定代理：                   
+
+ ```
+ $ export HTTP_PROXY=http://<proxy_user_id>:<proxy_password>@<proxy_server>:<proxy_port>
+ $ export HTTPS_PROXY=http://<proxy_user_id>:<proxy_password>@<proxy_server>:<proxy_port>
+ ```                   
+
+ 更少见的是，Linux 客户端遇到连接问题，下载到一半的时候中止（典型的就是在“正在接受数据”过程中）。据报道调整 TCP/IP 堆的设置并使用非平行的命令可以改善这个问题。你需要 root 权限访问并修改 TCP 设定：                    
+
+ ```
+ $ sudo sysctl -w net.ipv4.tcp_window_scaling=0
+ $ repo sync -j1
+ ```             
+
+## 使用一个本地镜像
+
+当使用多个客户端时，尤其是在带宽有限的情况下，最好在本地对整个服务器内容创建一个镜像，然后从这个镜像同步到客户端（这样就不需要网络访问权限）。当包含更大量内容的时候，下载一个完整镜像和两个客户端分别同时进行下载是大致相同的。                       
+
+这些说明假设镜像在 /usr/local/aosp/mirror 里被创建。第一步是创建一个镜像然后对自己进行同步。注意 --mirror 标识只可以在创建一个新客户端的时候被指定：                       
+
+```
+$ mkdir -p /usr/local/aosp/mirror
+$ cd /usr/local/aosp/mirror
+$ repo init -u https://android.googlesource.com/mirror/manifest --mirror
+$ repo sync
+```                      
+
+一旦镜像被同步，新的客户端就可以从中创建，注意一定要指定一个绝对路径：                    
+
+```
+$ mkdir -p /usr/local/aosp/master
+$ cd /usr/local/aosp/master
+$ repo init -u /usr/local/aosp/mirror/platform/manifest.git
+$ repo sync
+```                         
+
+最后，客户端要对服务器进行同步，镜像需要对客户端进行同步，然后客户端同步镜像：             
+
+```
+$ cd /usr/local/aosp/mirror
+$ repo sync
+$ cd /usr/local/aosp/master
+$ repo sync
+```                       
+
+可以将镜像存储在一个局域网服务器上，然后通过 NFS , SSH 或者 Git 访问它。同样也可以将它存储在可移动设备上，然后在用户或者机器直接传递它。                 
+
+## 验证 Git 标记
+
+加载下面的公钥到你的 GunPG 密钥库。这个密钥用来进行标签注释并签署发布。                 
+
+```
+$ gpg --import
+```                      
+
+复制粘贴下面的密钥，然后键入 EOF （或者 Ctrl-D）来结束输入病保存这个密钥。               
+
+```
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+mQGiBEnnWD4RBACt9/h4v9xnnGDou13y3dvOx6/t43LPPIxeJ8eX9WB+8LLuROSV
+lFhpHawsVAcFlmi7f7jdSRF+OvtZL9ShPKdLfwBJMNkU66/TZmPewS4m782ndtw7
+8tR1cXb197Ob8kOfQB3A9yk2XZ4ei4ZC3i6wVdqHLRxABdncwu5hOF9KXwCgkxMD
+u4PVgChaAJzTYJ1EG+UYBIUEAJmfearb0qRAN7dEoff0FeXsEaUA6U90sEoVks0Z
+wNj96SA8BL+a1OoEUUfpMhiHyLuQSftxisJxTh+2QclzDviDyaTrkANjdYY7p2cq
+/HMdOY7LJlHaqtXmZxXjjtw5Uc2QG8UY8aziU3IE9nTjSwCXeJnuyvoizl9/I1S5
+jU5SA/9WwIps4SC84ielIXiGWEqq6i6/sk4I9q1YemZF2XVVKnmI1F4iCMtNKsR4
+MGSa1gA8s4iQbsKNWPgp7M3a51JCVCu6l/8zTpA+uUGapw4tWCp4o0dpIvDPBEa9
+b/aF/ygcR8mh5hgUfpF9IpXdknOsbKCvM9lSSfRciETykZc4wrRCVGhlIEFuZHJv
+aWQgT3BlbiBTb3VyY2UgUHJvamVjdCA8aW5pdGlhbC1jb250cmlidXRpb25AYW5k
+cm9pZC5jb20+iGAEExECACAFAknnWD4CGwMGCwkIBwMCBBUCCAMEFgIDAQIeAQIX
+gAAKCRDorT+BmrEOeNr+AJ42Xy6tEW7r3KzrJxnRX8mij9z8tgCdFfQYiHpYngkI
+2t09Ed+9Bm4gmEO5Ag0ESedYRBAIAKVW1JcMBWvV/0Bo9WiByJ9WJ5swMN36/vAl
+QN4mWRhfzDOk/Rosdb0csAO/l8Kz0gKQPOfObtyYjvI8JMC3rmi+LIvSUT9806Up
+hisyEmmHv6U8gUb/xHLIanXGxwhYzjgeuAXVCsv+EvoPIHbY4L/KvP5x+oCJIDbk
+C2b1TvVk9PryzmE4BPIQL/NtgR1oLWm/uWR9zRUFtBnE411aMAN3qnAHBBMZzKMX
+LWBGWE0znfRrnczI5p49i2YZJAjyX1P2WzmScK49CV82dzLo71MnrF6fj+Udtb5+
+OgTg7Cow+8PRaTkJEW5Y2JIZpnRUq0CYxAmHYX79EMKHDSThf/8AAwUIAJPWsB/M
+pK+KMs/s3r6nJrnYLTfdZhtmQXimpoDMJg1zxmL8UfNUKiQZ6esoAWtDgpqt7Y7s
+KZ8laHRARonte394hidZzM5nb6hQvpPjt2OlPRsyqVxw4c/KsjADtAuKW9/d8phb
+N8bTyOJo856qg4oOEzKG9eeF7oaZTYBy33BTL0408sEBxiMior6b8LrZrAhkqDjA
+vUXRwm/fFKgpsOysxC6xi553CxBUCH2omNV6Ka1LNMwzSp9ILz8jEGqmUtkBszwo
+G1S8fXgE0Lq3cdDM/GJ4QXP/p6LiwNF99faDMTV3+2SAOGvytOX6KjKVzKOSsfJQ
+hN0DlsIw8hqJc0WISQQYEQIACQUCSedYRAIbDAAKCRDorT+BmrEOeCUOAJ9qmR0l
+EXzeoxcdoafxqf6gZlJZlACgkWF7wi2YLW3Oa+jv2QSTlrx4KLM=
+=Wi5D
+-----END PGP PUBLIC KEY BLOCK-----
+```                        
+
+输入完密钥，你可以使用下面的指令校验任何标记                      
+
+```
+$ git tag -v TAG_NAME
+```                  
+
+如果你还没有[搭建 ccache](https://source.android.com/source/initializing.html#ccache) ,现在是完成他的最好时机。
