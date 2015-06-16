@@ -27,15 +27,15 @@ Gingerbread （2.3.x） 或以上版本，包括 master 分支，都需要一个
 Java 7：适用于最新版本的 Android                
 
 `                          
- $ sudo apt-get update                           
- $ sudo apt-get install openjdk-7-jdk                    
+  $ sudo apt-get update                           
+  $ sudo apt-get install openjdk-7-jdk                    
 `                       
 
 也可以运行如下指令升级默认的 Java 版本：           
 
 `                   
- sudo update-alternatives --config java                  
- sudo update-alternatives --config javac                 
+  sudo update-alternatives --config java                  
+  sudo update-alternatives --config javac                 
 `                   
 
 如果你遇到 Java 版本错误，参考 [wrong-java-version](https://source.android.com/source/building-running.html#wrong-java-version) 中描述的来设置它的路径。                  
@@ -50,19 +50,19 @@ Java 5：适用 Cupcake 到 Froyo 的版本
 
 你将需要一个64位版本的 Ubuntu 。推荐 Ubuntu 14.04。                
 
-`$ sudo apt-get install bison g++-multilib git gperf libxml2-utils make zlib1g-dev:i386 zip`               
+` $ sudo apt-get install bison g++-multilib git gperf libxml2-utils make zlib1g-dev:i386 zip`               
 
 ### 安装需要的包（Ubuntu 12.04）
 
 你也许会使用 Ubuntu 12.04 来构建较早版本的 Android 。 master 分支和最近的发行都不支持 12.04 版本。             
 
 ```                       
-$ sudo apt-get install git gnupg flex bison gperf build-essential \                   
-  zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \                  
-  libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \                   
-  libgl1-mesa-dev g++-multilib mingw32 tofrodos \                          
-  python-markdown libxml2-utils xsltproc zlib1g-dev:i386                              
-$ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so                 
+  $ sudo apt-get install git gnupg flex bison gperf build-essential \                   
+    zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \                  
+    libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \                   
+    libgl1-mesa-dev g++-multilib mingw32 tofrodos \                          
+    python-markdown libxml2-utils xsltproc zlib1g-dev:i386                              
+  $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so                 
 ```                             
 
 ### 安装需要的包（Ubuntu 10.04 -- 11.10）
@@ -70,23 +70,23 @@ $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/lib
 在 Ubuntu 10.04-11.10 上构建已不在被支持，但仍可以用来构建较早的 AOSP。            
 
 ```
- $ sudo apt-get install git gnupg flex bison gperf build-essential \                        
-   zip curl zlib1g-dev libc6-dev lib32ncurses5-dev ia32-libs \                   
-   x11proto-core-dev libx11-dev lib32readline5-dev lib32z-dev \                     
-   libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown \                        
-   libxml2-utils xsltproc
+  $ sudo apt-get install git gnupg flex bison gperf build-essential \                        
+    zip curl zlib1g-dev libc6-dev lib32ncurses5-dev ia32-libs \                   
+    x11proto-core-dev libx11-dev lib32readline5-dev lib32z-dev \                     
+    libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown \                        
+    libxml2-utils xsltproc
 ```                   
 
 在 Ubuntu 10.10 中：
 
 ```
-$ sudo ln -s /usr/lib32/mesa/libGL.so.1 /usr/lib32/mesa/libGL.so
+  $ sudo ln -s /usr/lib32/mesa/libGL.so.1 /usr/lib32/mesa/libGL.so
 ```            
 
 在 Ubuntu 11.10 中：
 
 ```
-$ sudo apt-get install libx11-dev:i386
+  $ sudo apt-get install libx11-dev:i386
 ```                 
 
 ### 配置 USB 接口 
@@ -143,8 +143,9 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4ee0", MODE="0600", 
 在一些拥有多个存储设备的机器上。构建在存储源文件并输出到单独卷的时候会进行的较快。还有其他一些性能，比如可以将输出存储到一个经过速度优化的文件系统中并且不会造成稳健性崩溃，因为所有文件都可以在文件损坏的情况下被重新生成。                   
 
 要使用这种功能，配置输出 OUT_DIR_COMMON_BASE 变量指向到你存储输出数据的地方。          
+
 ```
-export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>
+  export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>
 ```    
 
 每个源代码树的输出目录都将在文件夹创建后以源码树命名。             
@@ -168,14 +169,14 @@ export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>
 你也可以在 shell 里输入下面的命令来创建它。                
 
 ```
-# hdiutil create -type SPARSE -fs 'Case-sensitive Journaled HFS+' -size 40g ~/android.dmg
+  # hdiutil create -type SPARSE -fs 'Case-sensitive Journaled HFS+' -size 40g ~/android.dmg
 ```               
 
 这会创建一个 .dmg （或者 .dmg.sparsefile ）文件，一旦被安装，将成为具有安卓开发所需格式的驱动器。           
 
 如果你以后需要更大的空间，你可以使用下面的指令来重新设置分散映像的大小。             
 ```
-# hdiutil resize -size <new-size-you-want>g ~/android.dmg.sparseimage
+  # hdiutil resize -size <new-size-you-want>g ~/android.dmg.sparseimage
 ```                    
 
 一个名为 android.dmg 的地盘映像被安装在你的主目录下，你可以在 ~/.bash_profile 文件中添加一个辅助功能模块。            
@@ -183,8 +184,8 @@ export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>
 - 执行 mountAndroid 的时候安装这个镜像文件：          
 
 ```
-# mount the android file image               
-  function mountAndroid { hdiutil attach ~/android.dmg -mountpoint /Volumes/android; }
+  # mount the android file image               
+    function mountAndroid { hdiutil attach ~/android.dmg -mountpoint /Volumes/android; }
 ```                     
 
   注意：如果你的系统创建了一个 .dmg.sparsefile 文件，请将 -/android.dmg 替换为 -/android.dmg.sparsefile 。               
@@ -229,7 +230,7 @@ export OUT_DIR_COMMON_BASE=<path-to-your-out-directory>
   注意：确保在你的 /usr/bin 路径之前存在 /opt/local/bin 路径。如果没有，请将下面的内容添加到你的 ~/.bash_profile 文件中：                
 
 ```
-export PATH=/opt/local/bin:$PATH
+  export PATH=/opt/local/bin:$PATH
 ```                 
 
   注意：如果在你的主目录下没有 .bash_profile 文件，那就创建一个。              
@@ -237,13 +238,13 @@ export PATH=/opt/local/bin:$PATH
 - 从 MacPorts 上获取 make , git 和 GPG 包的安装：               
 
 ```
-$ POSIXLY_CORRECT=1 sudo port install gmake libsdl git gnupg
+  $ POSIXLY_CORRECT=1 sudo port install gmake libsdl git gnupg
 ```                
 
 如果使用的是 Mac OS X v10.4 ，还需要安装 bison：             
 
 ```
-$ POSIXLY_CORRECT=1 sudo port install bison
+  $ POSIXLY_CORRECT=1 sudo port install bison
 ```                        
 
 #### 从 make 3.82 中恢复
@@ -253,31 +254,31 @@ $ POSIXLY_CORRECT=1 sudo port install bison
 - 编辑 /opt/local/etc/macports/sources.conf 并添加下面一行内容   
 
 ```
-file:///Users/Shared/dports
+  file:///Users/Shared/dports
 ```            
 
 添加完上面一行。之后创建这样一个目录： 
 
 ```
-$ mkdir /Users/Shared/dports
+  $ mkdir /Users/Shared/dports
 ```                 
 
 - 在新的 dports 目录中，运行     
 
 ```
-$ svn co --revision 50980 http://svn.macports.org/repository/macports/trunk/dports/devel/gmake/ devel/gmake/
+  $ svn co --revision 50980 http://svn.macports.org/repository/macports/trunk/dports/devel/gmake/ devel/gmake/
 ```               
 
 - 为你的本地仓库创建一个端口：         
 
 ```
-$ portindex /Users/Shared/dports
+  $ portindex /Users/Shared/dports
 ```            
 
 - 最后，输入下面的指令安装旧版的 gmake         
 
 ```
-$ sudo port install gmake @3.81
+  $ sudo port install gmake @3.81
 ```               
 
 #### 设置文件描述限制符
@@ -287,8 +288,8 @@ $ sudo port install gmake @3.81
 为了增加这个上限，将下面的一行添加到你的 -/.bash_profile 文件中： 
 
 ```
-# set the number of open files to be 1024
-ulimit -S -n 1024
+  # set the number of open files to be 1024
+    ulimit -S -n 1024
 ```                  
 
 ## 优化构建环境（可选）
@@ -300,31 +301,31 @@ ulimit -S -n 1024
 在你的 .bashrc （或其它同类文件）中添加下面一行：   
 
 ```
-export USE_CCACHE=1
+  export USE_CCACHE=1
 ```                    
 
 默认情况下 cache 会被存储在 ~/.ccache 下。如果你的主目录在 NFS 活着其它非本地系统上，你也同样需要在你的 .bashrc 文件中指定目录。         
 
 ```
-export CCACHE_DIR=<path-to-your-cache-directory>
+  export CCACHE_DIR=<path-to-your-cache-directory>
 ```                     
 
 建议缓存大小设为 50 － 100 GB 之间。在你下载好源代码之后运行下面的指令：               
 
 ```
-prebuilts/misc/linux-x86/ccache/ccache -M 50G
+  prebuilts/misc/linux-x86/ccache/ccache -M 50G
 ```                   
 
 在 Mac OS 中，你应该将 linux-x86 替换为 darwin-x86 ：               
 
 ```
-prebuilts/misc/darwin-x86/ccache/ccache -M 50G
+  prebuilts/misc/darwin-x86/ccache/ccache -M 50G
 ```                    
 
 在构建 Ice Cream Sandwich (4.0.x) 或更早版本的时候，ccache 会在一个不同的位置下：                
 
 ```
-prebuilt/linux-x86/ccache/ccache -M 50G
+  prebuilt/linux-x86/ccache/ccache -M 50G
 ```               
 
 这些设置被存储在 CCACHE_DIR 并且一直生效。                   
