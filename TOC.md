@@ -19,5 +19,5 @@
 + [d](life-of-a-pathces.md)
 + [d](submitting-patches.md)
 + [d](life-of-a-bug.md)
-+ [d](report-issues.md)
++ [d](report-bugs.md)
 + [d](code-style-guidelines.md)
