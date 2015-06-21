@@ -38,7 +38,7 @@
 ###安卓标志
 除非由谷歌通过书面协议明确授权，否则安卓标志和自定义字体不得被使用。这些图片也不能和安卓机器人一起被使用。
 
-![image](https://raw.githubusercontent.com/jikexueyuanwiki/android-source/master/images/brandguidelines6.png)
+![](/images/brandguidelines6.png)
 
 ##谷歌应用程序商店
 在包装，营销材料，或其本身使用“谷歌应用程序商店”名字和谷歌应用程序商店图标的硬件只允许用于[授权访问谷歌应用程序商店](https://source.android.com/source/faqs.html#if-my-device-is-compatible-does-it-automatically-have-access-to-google-play-and-branding)的设备上。
