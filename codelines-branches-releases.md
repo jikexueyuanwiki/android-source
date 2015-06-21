@@ -15,7 +15,7 @@
 
 ![](/images/codelines-branches-releases1.png)
 
-图 1 所示。AOSP代码和版本
+图 1 所示。AOSP 代码和版本
 
 ##条款及注意事项
 - 一个*发布版本*对应于一个安卓平台的正式版本，例如 1.5, 2.1 等等。一般来说，一个平台的发布版本对应一个正式版本。这个正式版本在 AndroidManifest.xml 文件的 SdkVersion 域里面且它是在 frameworks/base/api 源代码树下定义的。
