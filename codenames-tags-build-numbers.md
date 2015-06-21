@@ -132,8 +132,8 @@
 
 日期代码不能保证版本的确切的日期，通常它将微小变化加入到现有的版本中，在现有版本中重复使用相同的日期代码。
 
-##源代码标签和版本##
-从甜甜圈开始，准确的标签列表和版本显示在下表中。用于 Nexu s设备的出厂镜像和二进制文件可以从以下网址下载：
+##源代码标签和版本
+从甜甜圈开始，准确的标签列表和版本显示在下表中。用于 Nexus 设备的出厂镜像和二进制文件可以从以下网址下载：
 
 [https://developers.google.com/android/nexus/images](https://developers.google.com/android/nexus/images)
 [https://developers.google.com/android/nexus/drivers](https://developers.google.com/android/nexus/drivers)
