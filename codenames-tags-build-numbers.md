@@ -1,8 +1,9 @@
-#代码名称，标签和内部版本号
+# 代码名称，标签和内部版本号  
 
 概括来说，安卓的开发发生在各发布集合中，它使用可口美食作为代码名称，并按字母顺序排列。
 
-##平台代码名称，版本，API 等级和 NDK 发布
+## 平台代码名称，版本，API 等级和 NDK 发布  
+
 代码名称与下面的版本号匹配，下表也提供了相应的 API 级别和 NDK 版本方便查询：
 <table cellspacing="0">
 <thead>
@@ -132,7 +133,8 @@
 
 日期代码不能保证版本的确切的日期，通常它将微小变化加入到现有的版本中，在现有版本中重复使用相同的日期代码。
 
-##源代码标签和版本
+## 源代码标签和版本  
+
 从甜甜圈开始，准确的标签列表和版本显示在下表中。用于 Nexus 设备的出厂镜像和二进制文件可以从以下网址下载：
 
 [https://developers.google.com/android/nexus/images](https://developers.google.com/android/nexus/images)
@@ -750,17 +752,24 @@
 
 为了区别各版本，你可以得到每个项目通过发出以下命令，并向其传递两个分支标签相关的变化列表：
 
+```
 $ repo forall -pc 'git log --no-merges --oneline branch-1..branch-2'
+```
 
 例如：
 
+```
 $ repo forall -pc 'git log --no-merges --oneline android-4.4.2_r2..android-4.4.2_r1'
+```
 
 输出到文本文件中：
 
+```
 repo forall -pc 'git log --no-merges --oneline android-4.4.2_r2..android-4.4.2_r1' > /tmp/android-4.4.2_r2-android-4.4.2_r1-diff.txt
+```
 
-##蜂窝 GPL 模块
+## 蜂窝 GPL 模块  
+
 对于蜂窝，整个平台的源代码是不可用。然而，下列标签显示的是部分在 GPL 和 LGPL 许可下的蜂窝源代码：
 <table cellspacing="0">
 <thead>
@@ -836,8 +845,14 @@ repo forall -pc 'git log --no-merges --oneline android-4.4.2_r2..android-4.4.2_r
 
 没有证明显示上面表格中包含准确源代码。然而，有证明显示允许建立这些组件。下面的命令是为 3.0_r1.1 工作的，并且其它版本可通过切换 GIT 中 checkout 参数进行使用。如果必要的话，-m 参数需要重置。Git 的 checkout 命令会输出一个非 GPL 的项目的错误，如果不能在问题中找到标记。
 
+```
 $ repo init -b master -m base-for-3.0-gpl.xml
+```
 
+```
 $ repo sync
+```
 
+```
 $ repo forall -c git checkout android-3.0_r1.1
+```
