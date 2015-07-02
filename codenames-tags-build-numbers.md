@@ -5,6 +5,7 @@
 ## 平台代码名称，版本，API 等级和 NDK 发布  
 
 代码名称与下面的版本号匹配，下表也提供了相应的 API 级别和 NDK 版本方便查询：
+
 <table cellspacing="0">
 <thead>
 <tr>
@@ -121,6 +122,7 @@
 </tr>
 </tbody>
 </table> 
+
 从蛋糕开始，各独立版本由一个短的版本代码来区分，如 FRF85B。
 
 第一个字母代表的是版本集合的名称，例如 F 就是 Froyo。
@@ -129,7 +131,7 @@
 
 下一个字母和两个数字是一个日期代码。字母是计算季度的，A 代表 2009 年第一季度。因此，F 代表 2010 年第二季度。两个数字代表在这个季度中的天数。F85 代表的是 2010 年 6 月 24 日。
 
-最后，最后的字母标识与同一日期代码各个版本，依次以 A 开头的；A 实际上隐含的，通常不再赘述。
+最后，最后的字母标识与同一日期代码各个版本，依次以 A 开头的；A 实际上隐含的，通常省略。
 
 日期代码不能保证版本的确切的日期，通常它将微小变化加入到现有的版本中，在现有版本中重复使用相同的日期代码。
 
@@ -138,6 +140,7 @@
 从甜甜圈开始，准确的标签列表和版本显示在下表中。用于 Nexus 设备的出厂镜像和二进制文件可以从以下网址下载：
 
 [https://developers.google.com/android/nexus/images](https://developers.google.com/android/nexus/images)
+
 [https://developers.google.com/android/nexus/drivers](https://developers.google.com/android/nexus/drivers)
 
 <table cellspacing="0">
@@ -750,7 +753,7 @@
 
 分支 froyo, gingerbread, ics-mr0, ics-mr1, jb-dev, jb-mr1-dev, jb-mr1.1-dev, jb-mr2-dev, kitkat-dev 为代表的开发分支不完全匹配配置。这是由谷歌测试提供的结果。他们可能含有除了官方标记发布之外的各种变化和那些没有彻底的测试的开发分支。
 
-为了区别各版本，你可以得到每个项目通过发出以下命令，并向其传递两个分支标签相关的变化列表：
+为了区别各版本，你可以得到每个项目有关的变化列表，通过发出以下命令，并向其传递两个分支标签相关的变化列表：
 
 ```
 $ repo forall -pc 'git log --no-merges --oneline branch-1..branch-2'
@@ -768,9 +771,10 @@ $ repo forall -pc 'git log --no-merges --oneline android-4.4.2_r2..android-4.4.2
 repo forall -pc 'git log --no-merges --oneline android-4.4.2_r2..android-4.4.2_r1' > /tmp/android-4.4.2_r2-android-4.4.2_r1-diff.txt
 ```
 
-## 蜂窝 GPL 模块  
+## 蜂窝版本的 GPL 模块  
 
 对于蜂窝，整个平台的源代码是不可用。然而，下列标签显示的是部分在 GPL 和 LGPL 许可下的蜂窝源代码：
+
 <table cellspacing="0">
 <thead>
 <tr>
@@ -847,12 +851,6 @@ repo forall -pc 'git log --no-merges --oneline android-4.4.2_r2..android-4.4.2_r
 
 ```
 $ repo init -b master -m base-for-3.0-gpl.xml
-```
-
-```
 $ repo sync
-```
-
-```
 $ repo forall -c git checkout android-3.0_r1.1
 ```
