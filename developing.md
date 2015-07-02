@@ -36,7 +36,7 @@
     $ repo sync PROJECT0 PROJECT1 PROJECT2 ...
  
 
-## 创建特性分支
+## 创建主题分支
 
 当你开始进行一个改变时，在你的本地工作环境上新建一个主题分支，例如当你开始解决 bug 或开发新功能的时候。主题分支不是原始文件的复制；它是一个特定的提交的指向。这使得创建的本地分支能在它们之间进行轻微操作的切换。通过使用分支，你可以把当前的工作与其他工作分离。有关使用主题分支的一篇有趣的文章，请参阅 [分离特性分支](https://www.kernel.org/pub/software/scm/git/docs/howto/separating-topic-branches.txt)。  
 
