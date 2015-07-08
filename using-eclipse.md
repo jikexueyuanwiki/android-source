@@ -1,10 +1,11 @@
 # 使用 Eclipse
 
-本文将帮助您为 Android 平台开发建立 Eclipse IDE 。
+本文将帮助您为 Android 平台开发建立 Eclipse IDE。
 
->注意：如果您正在寻找如何使用 Eclipse 开发 Android 上运行的应用程序的资料，那么这不是您要找的页面。你也许会发现 [the Eclipse page on developer.android.com](https://developer.android.com/tools/sdk/eclipse-adt.html) 页面更加有用。
+> 注意：如果您正在寻找如何使用 Eclipse 开发 Android 上运行的应用程序的资料，那么这不是您要找的页面。你也许会发现 [the Eclipse page on developer.android.com](https://developer.android.com/tools/sdk/eclipse-adt.html) 页面更加有用。
 
 ## 基本设置
+
 首先，重要的是要确保常规 Android 开发系统的设置。
 
     cd /path/to/android/root   
@@ -17,6 +18,7 @@ Eclipse 需要一个目录列表去搜索 Java 文件。这个被称为“Java B
     cd /path/to/android/root   
     cp development/ide/eclipse/.classpath .
     chmod u+w .classpath
+    
 如果必要的话，现在可以编辑复制 `.classpath`。
 
 ## 增加 Eclipse 的内存设置
@@ -54,11 +56,11 @@ Android 项目（所占空间）非常的大以致有时 Eclipse 的 Java VM 在
 5. 取消使用默认位置，输入路径到 Android 根目录，然后点击 Finish。
 6. 等待建立项目的时候。（你会看到一个微妙的进度表在右下角）
 
-一旦项目工作区创建，Eclipse 也应当开始建立。从理论上讲，它的建立应该事没有错误的，你应该准备好开始启动。如果有必要，取消选择再重新选择项目自动构建（Project Build Automatically）以强制重建。
+一旦项目工作区创建，Eclipse 也应当开始构建。从理论上讲，它的建立应该是没有错误的，你应该准备好开始启动。如果有必要，取消选择再重新选择项目自动构建（Project Build Automatically）以强制重建。
 
->注意：Eclipse 有时会添加一个 `import android.R` 声明在你文件的顶部以使用资源，特别是当你要求 Eclipse 分类或以其他方式管理导入包（imports）。这将导致你的构造被破坏。要留心找到那些错误的导入（import）声明并删除掉它们。
+> 注意：Eclipse 有时会添加一个 `import android.R` 声明在你文件的顶部以使用资源，特别是当你要求 Eclipse 分类或以其他方式管理导入包（imports）。这将导致你的构造被破坏。要留心找到那些错误的导入声明并删除掉它们。
 
-##当你同步时
+## 当你同步时
 
 每次你同步 Repo，或者以其他方式改变 Eclipse 外部的文件（特别是.classpath）时，你需要更新 Eclipse 视图的以下东西：
 
@@ -66,30 +68,33 @@ Android 项目（所占空间）非常的大以致有时 Eclipse 的 Java VM 在
 2. 在导航（Navigator）中，右键单击项目名称
 3. 点击右键菜单中的刷新（Refresh）。
 
-## 添加 Apps（应用程序）到构建路径（Build Path）上
-默认的 `.classpath` 包括核心系统的来源和一组 APP 的样本，但也许并不包括你想要的特定的 APP。添加一个 APP，你必须添加 APP 的源目录。需要在 Eclipse 里面完成这些：
+## 添加 Apps到构建路径中
+
+默认的 `.classpath` 包括核心系统的来源和一组 APP 的例子，但也许并不包括你想要的特定的 APP。添加一个 APP，你必须添加 APP 的源目录。需要在 Eclipse 里面完成这些：
 
 1. 项目（Project）> 属性（Properties）
 2. 选择左边菜单上的 “Java Build Path（Java 构建路径）”上。
-3. 选择 “Source（源）” 选项卡。
+3. 选择 “Source” 选项卡。
 4. 点击“Add Folder…（添加文件夹…）”
 5. 添加你的 APP 的 `src` 目录下。
 6. 点击 OK。
 
-当你完后，你应该可以看到“source folder（源文件夹）” 路径在列表中如下显示：
+当你完后，你应该可以看到“source folder”路径在列表中如下显示：
 
     android/packages/apps/YOURAPP/src
 
 根据你所包含的 APP，你可能也需要包含 `android/dalvik/libcore`  下的 `othersrc/main/java` 目录。如果你发现你不能在默认设置下构建的时候你就用这个方法。
     
 ## Eclipse 格式化
+
 你可以导入文件到 `development/ide/eclipse` 里面使得 Eclipse 跟随 Android 的样式规则。
 
 1. 选择窗口（Windows）> 参数选择（Preferences）> Java > 代码风格（Code Style）。
-2. 使用格式化（Formatter）> 导入（Import）导入 `android-formatting.xml`。
-3. 整理导入包 (Imports) > 导入（Import）来导入 `android.importorder`。
+2. 使用格式化（Formatter）> 导入 `android-formatting.xml`。
+3. 整理导入包 (Imports) > 导入 `android.importorder`。
 
-## 使用 Eclipse 调试仿真器
+## 使用 Eclipse 调试模拟器
+
 你也可以使用 Eclipse 通过单步调试代码去调试模拟器。首先，开始运行模拟器：
 
     cd /path/to/android/root 
@@ -97,12 +102,14 @@ Android 项目（所占空间）非常的大以致有时 Eclipse 的 Java VM 在
     lunch 1    
     make       
     emulator
+    
 如果模拟器正在运行，你可以看见一张手机的图片。  
 
-在另一个命令行，启动 DDMS（Dalvik虚拟机调试管理器）：
+在另一个命令行，启动 DDMS（Dalvik 虚拟机调试管理器）：
 
     cd /path/to/android/root 
     ddms
+    
 你应该看到一个 splufty 调试控制台。
 
 现在，在Eclipse中，您可以连接到模拟器：
@@ -119,6 +126,7 @@ Android 项目（所占空间）非常的大以致有时 Eclipse 的 Java VM 在
 你可能需要打开调试（Debug）视图（在“Java”视图图标的右上角，点击的“Open Perspective（打开视图）” 的小图标然后选择“Debug（调试）”）。一旦你做了这些，你应该可以看到一个线程的列表；如果你选择一个（线程）并且中断它（通过点击“pause（暂停）”图标），那么它应该显示堆栈跟踪，源文件，和执行路线。断点和诸如此类的东西都应该在工作。
 
 ## 扩展材料
+
 Mac 系统的苹果键替换 Ctrl 键
 
 <table>
@@ -164,7 +172,7 @@ Mac 系统的苹果键替换 Ctrl 键
 </tbody>
 </table>
 
-## Eclipse 不能正常运行时，我该怎么做？
+## Eclipse 不能正常运行时，该怎么做？
 
 首先确认：
 
