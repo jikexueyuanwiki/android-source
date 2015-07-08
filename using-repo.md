@@ -4,13 +4,12 @@ Repo 的使用形式如下：
 
     repo <COMMAND> <OPTIONS>
 
-可选元素显示在方括号[]里面。例如，许多命令接受项目列表作为参数。您可以指定项目列表作为名称列表或本地源目录的路径列表：
+可选元素显示在方括号[]里面。例如，许多命令接受的项目列表作为参数。您可以指定项目列表作为名称列表或本地源目录的路径列表：
 
     repo sync [<PROJECT0> <PROJECT1> <PROJECTN>]
     repo sync [</PATH/TO/PROJECT0> ... </PATH/TO/PROJECTN>]
 
 ## 帮助
-
 一旦 Repo 被安装，你可以找到总结所有命令的最新的文档，运行：
 
     repo help
@@ -41,20 +40,20 @@ Repo 的使用形式如下：
 
 当你运行 `repo sync` ，将会发生：
 
-- 如果项目从来没有被同步过，那么 `repo sync` 相当于 `git clone`。远程仓库的所有分支都被复制到本地项目目录中。
+- 如果项目从来没有被同步过，那么 `repo sync` 相当于 `git clone`。在远程仓库的所有分支都被复制到本地项目目录。
 - 如果项目曾经已经被同步过，那么 `repo sync` 相当于：   
     <code>
     git remote update   
     git rebase origin/<BRANCH>
 
 `<BRANCH>` 是本地项目目录中的当前检查的分支。如果本地分支不跟踪远程仓库的分支，那么没有同步发生的项目。
-- 如果 git rebase 操作导致合并冲突，那么你需要使用正规的 Git 命令（例如，`git rebase ——continue`）去解决这个冲突。
+- 如果 git rebase 操作导致合并冲突，你将需要使用正规的 Git 命令（例如，`git rebase ——continue`）去解决这个冲突。
 
 一个成功的 `repo sync` 之后，指定项目中的代码将和最新的代码留在远程仓库中。
 
 选项：  
 
-- `-d`：切换指定项目回到清单修正。如果该项目目前是一个主题分支那就有帮助，但清单修正是暂时需要。
+- `-d`：切换指定项目回到清单修正。如果该项目目前是一个特性分支那就有帮助，但清单修正是暂时需要。
 - `-s`：同步到一个已知的构建 manifest-server 在当前清单指定的元素。`
 - `-f`：继续同步其他项目，即使有项目同步失败。
 
@@ -62,9 +61,9 @@ Repo 的使用形式如下：
 
     repo upload [<PROJECT_LIST>]
 
-在指定的项目中，Repo 把本地分支的更新比作远程分支在最后一次 Repo 同步。Repo 会提示你选择一个或多个尚未上传审查的分支。
+在指定的项目中，Repo 把本地分支的更新比作远程分支在最后一次 Repo 同步。Repo 会提示你选择一个或更多尚未上传审查的分支。
 
-你选择一个或多个分支时，选到的分支上的所有 commits 会通过 HTTPS 连接传送到 Gerrit。你将需要配置一个 HTTPS 密码去启用上传授权。查看 [密码生成器](https://www.googlesource.com/new-password?state=android&code=4) 生成新的用户名/密码配对去使用　HTTPS。
+你选择一个或更多分支时，选到的分支上所有的 commits 会通过 HTTPS 连接传送到 Gerrit。你将需要配置一个 HTTPS 密码去启用上传授权。查看 [密码生成器](https://www.googlesource.com/new-password?state=android&code=4) 生成新的用户名/密码配对去使用　HTTPS。
 
 当 Gerrit 在它的服务器接收到对象数据时，它会把每个 commit 转变成更改，所以审阅者可以单独的评论每条 commit。将几条“checkpoint” commits 一起合并到一条单个的 commit 上，然后在你运行 repo upload 之前使用 git rebase -i 。
 
@@ -82,7 +81,6 @@ Repo 的使用形式如下：
     [ 2829 ] ec18b4ba Update proto client to support patch set replacments 
     # Insert change numbers in the brackets to add a new patch set.
     # To create a new change record, leave the brackets empty.
-
 ``` 
  
 上传完成后，更改将会有一个额外的补丁集（Patch Set）。
@@ -91,13 +89,13 @@ Repo 的使用形式如下：
 
     repo diff [<PROJECT_LIST>]
 
-在 commit 和工作目录之间使用 `git diff` 表示明显差异的更改。
+在 commit 和工作目录之间使用 `git diff` 显示明显差异的更改。
 
 # 下载
 
     repo download <TARGET> <CHANGE>
 
-从审查系统下载指定的更改，然后使它在你的项目的本地工作目录中可用。
+从审查系统下载指定的更改然后使它在你的项目的本地工作目录中可用。
 
 例如，下载 [change 23823](https://android-review.googlesource.com/#/c/23823/) 到你的平台/框架/基本目录：
 
