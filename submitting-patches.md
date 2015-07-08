@@ -29,8 +29,6 @@ $ repo start NAME .
 
 ### 更改
 
-Once you have modified the source files (and validated them, please) commit the changes to your local repository:
-
 一但你更改了源码里面的文件（请验证它们），在本地库中 commit 这个改变：
 
 ```
@@ -189,7 +187,5 @@ external/v8 目录下 V8 项目的所有更改都应该提交到 [code.google.co
 external/webkit 目录下 WebKit 项目的所有更改都应该在 [webkit.org](http://www.webkit.org/) 中 upstream。这个过程首先是提出一个 Webkit bug。这个 bug 应该是使用 Android 平台和系统，并且这个 bug 仅仅是针对于 Android 的。当添加了修复提议并有测试，Bugs 将更容易引起检查员的注意。查看 [Contributing Code to WebKit](http://webkit.org/coding/contributing.html) 获取更多信息。
 
 ### zlib
-
-All changes to the zlib project at external/zlib should be made upstream at zlib.net.
 
 external/zlib 目录下 zlib 项目的所有更改狗应该在 [zlib.net](http://zlib.net/) 中 upstream。
