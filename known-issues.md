@@ -8,11 +8,11 @@
 
 #### 症状
 
-在 AOSP 给 toro的构建中（Jelly Bean 4.2.1 之后的版本），CellBroadcastReceiver 并不会包括在系统中。
+在 AOSP 给 toro 的构建中（Jelly Bean 4.2.1 之后的版本），CellBroadcastReceiver 并不会包括在系统中。
 
 #### 原因：
 
-在 *vendor/samsung/toro/device-partial.mk*中的 *PRODUCT_PACKAGES* 有一个排版错误：有一个 H 替代了 K。
+在 *vendor/samsung/toro/device-partial.mk* 中的 *PRODUCT_PACKAGES* 有一个排版错误：有一个 H 替代了 K。
 
 #### 修复：
 
@@ -74,7 +74,7 @@ $ emulator -kernel prebuilt/android-arm/kernel/kernel-qemu-armv7
 
 #### 原因：
 
-默认情况下，现在所有模拟器构建都会进行 Dex 优化，这就会导致每次框架改变都会，请求跟随所有的依赖用来重新优化应用。
+默认情况下，现在所有模拟器构建都会进行 Dex 优化，这就会导致每次框架改变都会请求跟随所有的依赖，用来重新优化应用。
 
 #### 修复：
 
@@ -116,13 +116,13 @@ $ emulator -kernel prebuilt/android-arm/kernel/kernel-qemu-armv7
 
 #### 原因：
 
-安卓构建系统往往使用很多 host 工具并依赖于他们默认的行为。有些设置更改了工具的行为并使他们的行为干扰到了系统构建。已知会导致问题的变量是 *CDPATH* 和 *GREP_OPTIONS*
+安卓构建系统往往使用很多 host 工具并依赖于他们默认的行为。有些设置更改了工具的行为并使他们的行为干扰到了系统构建。已知会导致问题的变量是 *CDPATH* 和 *GREP_OPTIONS*。
 
 #### 修复：
 
 在尽可能少的自定义环境中构建 Android。
 
-### 在 MacOS 10.7 上构建4.0.x 以及之前版本的错误
+### 在 MacOS 10.7 上构建 4.0.x 以及之前版本的错误
 
 #### 特征：
 
@@ -153,13 +153,13 @@ XCode 4.3 的默认编译器从 gcc 改成了 llvm，而 llvm 拒绝过去可以
 
 #### 修复：
 
-使用 XCode 4.2
+使用 XCode 4.2。
 
 ### 在 Ubuntu 11.10 上构造 4.0.x 或更早版本的错误
 
 #### 特征：
 
-在 Ubuntu 11.10 或之后的版本中构建 IceCreamSandwich 4.0.x（或者其之前的版本）会出现类似 *<command-line>:0:0: warning: "_FORTIFY_SOURCE" redefined [enabled by default]* 的错误
+在 Ubuntu 11.10 或之后的版本中构建 IceCreamSandwich 4.0.x（或者其之前的版本）会出现类似 *<command-line>:0:0: warning: "_FORTIFY_SOURCE" redefined [enabled by default]* 的错误。
 
 #### 原因：
 
@@ -167,7 +167,7 @@ Ubuntu 11.10 使用 gcc 标记是默认的，而 Android 也会定义一个默�
 
 #### 修复：
 
-可以选择降级到 Ubuntu 10.04 或者 使用当前分支，这样就可以在 Ubuntu 11.10 或者之后的版本中使用。
+可以选择降级到 Ubuntu 10.04 或者使用当前分支，这样就可以在 Ubuntu 11.10 或者之后的版本中使用。
 
 ```
 $ repo init -b master
@@ -180,21 +180,21 @@ $ repo sync
 
 #### 特征：
 
-在http 错误的时候 *repo* 或者是 *repo sync* 失败，通常是 403 或者是 500。
+在 http 错误的时候 *repo* 或者是 *repo sync* 失败，通常是 403 或者是 500。
 
 #### 原因
 
-有很多引起错误的原因，其中最常见的是关联到了 http 代理，这回是传输大数据的时候变得很困难。
+有很多引起错误的原因，其中最常见的是关联到了 http 代理，这是传输大数据的时候比较困难。
 
 #### 修复：
 
-暂时还没有通用解决方法，使用 python 2.7 以及明确的使用 *repo sync -jl*来改善一些用户的使用情况。
+暂时还没有通用解决方法，使用 python 2.7 以及明确的使用 *repo sync -jl* 来改善一些用户的使用情况。
 
 ### 复杂同步源代码（VituralBox 以太网问题）
 
 #### 特征：
 
-当在一些 VituralBox 安装中运行 *repo sync*，进程伴随着可能的特征挂起或者失败。其中一种特征是：*DownloadError: HTTP 500 (Internal Server Error: Server got itself in trouble)*
+当在一些 VituralBox 安装中运行 *repo sync*，进程伴随着可能的特征挂起或者失败。其中一种特征是：*DownloadError: HTTP 500 (Internal Server Error: Server got itself in trouble)*。
 
 #### 原因：
 
@@ -208,7 +208,7 @@ $ repo sync
 
 #### 特征：
 
-当运行 *repo sync* 时，由于无法识别 hostname 伴随着一些错误导致进程失败。其中一个错误是： *<urlopen error [Errno -2] Name or service not known>*
+当运行 *repo sync* 时，由于无法识别 hostname 伴随着一些错误导致进程失败。其中一个错误是： *<urlopen error [Errno -2] Name or service not known>*。
 
 #### 原因：
 
@@ -216,9 +216,9 @@ $ repo sync
 
 #### 修复：
 
-手工移除相关的 hostname ，并且在本地硬编码那些结果。
+手工移除相关的 hostname，并在本地硬编码那些结果。
 
-你可以用 **命令来移除，这可以给你一些列的数字 IP 地址（通常是在输出中的 “Address” 部分）。
+你可以用 *nslookup* 命令来移除，这可以给你一系列的数字 IP 地址（通常是在输出中的 “Address” 部分）。
 
 ```
 $ nslookup googlesource.com
@@ -232,7 +232,7 @@ aaa.bbb.ccc.ddd googlesource.com
 eee.fff.ggg.hhh android.googlesource.com
 ```
 
-需要注意的是这只在服务的地址没有改变的情况下，所以如果他们更改了地址而你又无法连接，这时候你就要重新的获取 hostname ，相应的你还要更改 *etc/hosts*。
+需要注意的是这只在服务的地址没有改变的情况下，所以如果他们更改了地址而你又无法连接，这时候你就要重新的获取 hostname，相应的你还要更改 *etc/hosts*。
 
 ### 复杂同步源代码（TCP 问题）
 
@@ -254,11 +254,11 @@ eee.fff.ggg.hhh android.googlesource.com
 
 #### 特征：
 
-照相机和 GSP 在 Galaxy Nexus 上失效。举个例子，照相机应用已启动就崩溃。
+照相机和 GSP 在 Galaxy Nexus 上失效。举个例子，照相机应用一启动就崩溃。
 
 #### 原因：
 
-在Android开源项目中布提供这些硬件外设需要专有库。
+在 Android 开源项目中不提供这些硬件外设需要专有库。
 
 #### 修复：
 

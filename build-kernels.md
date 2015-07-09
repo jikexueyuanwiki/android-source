@@ -2,7 +2,7 @@
 
 如果你只对内核感兴趣，你可以利用这篇文章来帮助你下载并且构建出合适的内核。
 
-下面的信息我们假定你还没有下载所有的 AOSP。如果你已经下载了所有的 AOSP ，你可以跳过 git clone 的部分到下载实际的内核源码。
+下面的信息我们假定你还没有下载所有的 AOSP。如果你已经下载了所有的 AOSP，你可以跳过 git clone 的部分到下载实际的内核源码。
 
 在下面的例子中，我们将使用 Pandaboard 内核。
 
@@ -50,7 +50,7 @@ $ git log --max-count=1 kernel
 $ dd if=kernel bs=1 skip=$(LC_ALL=C grep -a -b -o $'\x1f\x8b\x08\x00\x00\x00\x00\x00' kernel | cut -d ':' -f 1) | zgrep -a 'Linux version'
 ```
 
-在 Nexus 5 （hammerhead），你可以用这个命令：
+在 Nexus 5 （hammerhead，你可以用这个命令：
 
 ```
 $ dd if=zImage-dtb bs=1 skip=$(LC_ALL=C od -Ad -x -w2 zImage-dtb | grep 8b1f | cut -d ' ' -f1 | head -1) | zgrep -a 'Linux version'
@@ -79,7 +79,7 @@ $ git clone https://android.googlesource.com/kernel/tegra.git
 
 * *samsung* 工程是为了 Xoom，Nexus 7，Nexus 9，也可以被当做一个起始点给 Samsung Hummingbird 芯片组使用。
 
-* *tegra* 工程是给 Xoom，Nexus 7， Nexus 9，也可以被当做一个起始点给 NVIDIA Tegra 芯片组使用。
+* *tegra* 工程是给 Xoom，Nexus 7，Nexus 9，也可以被当做一个起始点给 NVIDIA Tegra 芯片组使用。
 
 * *exynos* 工程包含供 Nexus 10 的核心源码，也可以被当做一个起始点给 Samsung Exynos 芯片组使用。
 

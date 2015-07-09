@@ -10,6 +10,7 @@ Repo 的使用形式如下：
     repo sync [</PATH/TO/PROJECT0> ... </PATH/TO/PROJECTN>]
 
 ## 帮助
+
 一旦 Repo 被安装，你可以找到总结所有命令的最新的文档，运行：
 
     repo help
@@ -30,21 +31,21 @@ Repo 的使用形式如下：
 - `-m`：在仓库里选择一个清单文件。如果没有清单名称，那么默认是 default.xml。
 - `-b`：指定一个修正，例如，一个特殊的清单分支（manifest-branch）。
 
->注意：所有剩余的 Repo 命令，在当前工作目录下必须是 `.repo/` 的父目录或是一个父目录的子目录。
+> 注意：所有剩余的 Repo 命令，在当前工作目录下必须是 `.repo/` 的父目录或是一个父目录的子目录。
 
 ## 同步
 
     repo sync [<PROJECT_LIST>]
 
-下载新的更改，更新在你本地环境中的工作文件。如果你不带参数运行 `repo sync` ，它将同步所有项目的文件。
+下载新的更改，更新在你本地环境中的工作文件。如果你不带参数运行 `repo sync`，它将同步所有项目的文件。
 
-当你运行 `repo sync` ，将会发生：
+当你运行 `repo sync`，将会发生：
 
 - 如果项目从来没有被同步过，那么 `repo sync` 相当于 `git clone`。在远程仓库的所有分支都被复制到本地项目目录。
 - 如果项目曾经已经被同步过，那么 `repo sync` 相当于：   
-    <code>
-    git remote update   
-    git rebase origin/<BRANCH>
+    
+    	git remote update   
+    	git rebase origin/<BRANCH>
 
 `<BRANCH>` 是本地项目目录中的当前检查的分支。如果本地分支不跟踪远程仓库的分支，那么没有同步发生的项目。
 - 如果 git rebase 操作导致合并冲突，你将需要使用正规的 Git 命令（例如，`git rebase ——continue`）去解决这个冲突。
@@ -53,7 +54,7 @@ Repo 的使用形式如下：
 
 选项：  
 
-- `-d`：切换指定项目回到清单修正。如果该项目目前是一个特性分支那就有帮助，但清单修正是暂时需要。
+- `-d`：切换指定项目回到清单修正。如果该项目目前是一个主题分支那就有帮助，但清单修正是暂时需要。
 - `-s`：同步到一个已知的构建 manifest-server 在当前清单指定的元素。`
 - `-f`：继续同步其他项目，即使有项目同步失败。
 
@@ -74,14 +75,13 @@ Repo 的使用形式如下：
 - 确保更新的分支是当前已审查的分支。
 - 在系列里的每个 commit 的括号内输入 Gerrit 改变 ID：
     
-```
-   
-    # Replacing from branch foo 
-    [ 3021 ] 35f2596c Refactor part of GetUploadableBranches to lookup one specific...
-    [ 2829 ] ec18b4ba Update proto client to support patch set replacments 
-    # Insert change numbers in the brackets to add a new patch set.
-    # To create a new change record, leave the brackets empty.
-``` 
+	```
+	# Replacing from branch foo 
+	[ 3021 ] 35f2596c Refactor part of GetUploadableBranches to lookup one specific...
+	[ 2829 ] ec18b4ba Update proto client to support patch set replacments 
+	# Insert change numbers in the brackets to add a new patch set.
+	# To create a new change record, leave the brackets empty.
+	``` 
  
 上传完成后，更改将会有一个额外的补丁集（Patch Set）。
 
@@ -95,7 +95,7 @@ Repo 的使用形式如下：
 
     repo download <TARGET> <CHANGE>
 
-从审查系统下载指定的更改然后使它在你的项目的本地工作目录中可用。
+从审查系统下载指定的更改，然后使它在你的项目的本地工作目录中可用。
 
 例如，下载 [change 23823](https://android-review.googlesource.com/#/c/23823/) 到你的平台/框架/基本目录：
 
@@ -103,24 +103,24 @@ Repo 的使用形式如下：
 
 一个 `repo sync` 应该可以有效地移除任何通过 `repo download` 恢复的 commit。或者，你可以检查远程分支；例如，`git checkout m/master`。
 
->注意:当更改在 Gerrit 网络上可见时和 `repo download` 被所有用户找到时，期间，有一个轻微的镜像滞后，因为复制延迟存在于全世界所有的服务器。
+> 注意:当更改在 Gerrit 网络上可见时和 `repo download` 被所有用户找到时，期间，有一个轻微的镜像滞后，因为复制延迟存在于全世界所有的服务器。
 
 ## forall
 
     repo forall [<PROJECT_LIST>] -c <COMMAND>
 
-在每个项目中执被给予的 shell 命令。如下的附加环境变量是通过 `repo forall` 才变得有效的：
+在每个项目中被给予的 shell 命令。如下的附加环境变量是通过 `repo forall` 才变得有效的：
 
 - `REPO_PROJECT` 设置项目唯一的名称。
 - `REPO_PATH` 是相对于客户端 root 的路径。
 - `REPO_REMOTE` 是清单中远程系统的名称。
-- `REPO_LREV` 是清单中修订本的名字，翻译成一个本地跟踪分支。如果你需要通过清单修正去一个在本地执行的 git 命令的时候可以使用。
+- `REPO_LREV` 是清单中修订本的名字，翻译成一个本地跟踪分支。如果你需要通过清单修正去本地执行 git 命令的时候可以使用。
 - `REPO_RREV` 是清单中修订本的名字，正如在清单中所写的那样。
 
 选项：
 
 - `-c`：执行命令和参数。命令是通过 `/bin/sh` 评估的并且后面的任何参数就如 shell 位置的参数通过。
-- `-p`：在指定命令的输出前显示项目标题。这是通过绑定管道到命令的stdin，stdout，和 sterr 流，并且用管道输送所有输出量到一个连续的流，显示在一个单一的页调器会话。
+- `-p`：在指定命令的输出前显示项目标题。这是通过绑定管道到命令的stdin，stdout，和 sterr 流，并且用管道输送所有输出量到一个连续的流，显示在一个单一的页面调度会话中。
 - `-v`：显示命令写到 sterr 的信息。
 
 ## 删减
@@ -137,9 +137,9 @@ Repo 的使用形式如下：
 
 `<BRANCH_NAME>`参数应该提供一个更改的简短说明给你正在尝试建立的项目。如果你不知道，那就考虑使用默认名称。
 
-`<PROJECT_LIST>` 指定将要参与这个特性分支的项目。
+`<PROJECT_LIST>` 指定将要参与这个主题分支的项目。
 
->注意："." 是当前工作目录下的项目的一个方便的简写。
+> 注意："." 是当前工作目录下的项目的一个方便的简写。
 
 ## 状态
 
@@ -204,6 +204,7 @@ Repo 的使用形式如下：
 </table>
 
 在第二列中，一个小写字母表明了工作目录和索引的差异。
+
 <table>
 <thead>
 <tr>

@@ -13,13 +13,11 @@
 有时候，开发者会倾向于编写完全忽视了异常的代码，就像下面这样：
 
 ~~~
-
 void setServerPort(String value) {
     try {
         serverPort = Integer.parseInt(value);
     } catch (NumberFormatExceptio e) { }
 }
-
 ~~~
 
 开发者绝不能像这样。当你觉得你的代码不会出现这个错误，或者处理这个错误并不重要的时候，像上面的代码那样忽略了异常处理就相当于在你的代码中给以后接手的开发者埋下了地雷，他们总有一天会在这里遇到问题。你必须将代码中所有的异常用一种规范化的方式处理好，具体的处理方式取决于情况的不同。
@@ -31,32 +29,26 @@ void setServerPort(String value) {
 - 由方法的调用者抛出异常
 
 ~~~
-
 void setServerPort(String value) throws NumberFormatException {
     serverPort = Integer.parseInt(value);
 }
-
 ~~~
 
 - 抛出一个适合你当前抽象层次的新异常
 
 ~~~
-
 void setServerPort(String value) throws ConfigurationException {
     try {
         serverPort = Integer.parseInt(value);
     } catch (NumberFormatException e) {
         throws new ConfigurationException("Port " + value + " is not valid.");
     }
-
 ~~~
 
 - 通过在 catch 代码块中使用一个合适的值替代异常值来处理异常
 
 ~~~
-
 /** 设置端口号，当 value 是一个无效数字时， 使用80替代 */
-
 void setServerPort(String value) {
     try {
         serverPort = Integer.parseInt(value);
@@ -64,13 +56,11 @@ void setServerPort(String value) {
         serverPort = 80; // 服务器的默认端口
     }
 }
-
 ~~~
 
 - 捕获异常并抛出一个新的`运行时异常`。这种方式存在风险：只有当你确认出现这种错误的时，令程序崩溃是最合适的处理方式，才能采用该方式。
 
 ~~~
-
 /** 设置端口号，如果 value 是一个无效值，程序中断。 */
 void setServerPort(String value) {
     try {
@@ -79,7 +69,6 @@ void setServerPort(String value) {
         throws new RuntimeException("port " + value + " is invalid, ", e);
     }
 }
-
 ~~~
 
 请注意，原来的异常传递给了 RuntimeException 的构造器。如果你的代码必须在 Java 1.3 以下版本编译，你需要省略掉异常发生的原因。
@@ -87,7 +76,6 @@ void setServerPort(String value) {
 - 最后一招：如果你认为忽略屌异常处理是最合适的，并且对此相当有信心，那么你可以忽略异常。但是你必须在注释中说明为什么：
 
 ~~~
-
 /** 如果 value 是无效的数字，将会使用原来的端口号。 */
 void setServerPort(String value) {
     try {
@@ -97,7 +85,6 @@ void setServerPort(String value) {
         // serverPort 将不会发生改变
     }
 }
-
 ~~~
 
 ### 不要捕获一般性异常（Generic Exception）
@@ -105,16 +92,14 @@ void setServerPort(String value) {
 有些时候，为了偷懒，开发者将会像下面这样捕获异常并作出处理：
 
 ~~~
-
 try {
     someComplicatedIOFunction();        // 可能抛出 IOException 
     someComplicatedParsingFunction();   // 可能抛出 ParsingException 
     someComplicatedSecurityFunction();  // 可能抛出 SecurityException 
     // phew, made it all the way 
 } catch (Exception e) {                 // 我希望捕获所有的异常
-    handleError();                      // with one generic handler!
+    handleError();                      // 一个普通的 handler
 }
-
 ~~~
 
 你不能这样做。几乎所有情况下都不适合捕获一般性异常，因为其中包括还包括了错误异常，这是相当危险的。这意味着你并不期待的异常（包括运行时异常，就像 ClassCastException）最后却在应用级别的错误处理中被捕获。它掩盖了处理失败的代码，这意味着如果有人在您正在调用的代码中添加了一个新类型的异常，编译器无法告诉你需要以不同的方式处理该错误。并且在几乎全部情况下，你都不应该以同种方式处理不同种类的异常。
@@ -139,7 +124,7 @@ try {
 
 缺点：并不能保证终结器什么时候会被调用，甚至有时候它根本不会被调用。
 
-判定：我们不应使用终结器。在大多数情况下，你可以在终结器中执行你需要的操作，并且能实现良好的异常处理。如果你一定需要它，定义一个 close() 方法（或者是 like）并注明什么时候它应该被调用。我们可以吧 InputStream 当做一个例子来说明一下。在这种情况下，它并不是一定要在终结器中输出日志信息，但是，如果并不希望输出太多日志信息的话，在终结器中输出小段日志信息是很合适的方法。
+判定：我们不应使用终结器。在大多数情况下，你可以在终结器中执行你需要的操作，并且能实现良好的异常处理。如果你一定需要它，定义一个 close() 方法（或者是 like）并注明什么时候它应该被调用。我们可以把 InputStream 当做一个例子来说明一下。在这种情况下，它并不是一定要在终结器中输出日志信息，但是，如果并不希望输出太多日志信息的话，在终结器中输出小段日志信息是很合适的方法。
 
 ### 完全限定引用
 
@@ -164,7 +149,6 @@ try {
 每个文件都会在其顶部放置版权声明。然后是包的声明和引用语句，用空行把不同作用的语句块分离开来。接下来是类或者接口的声明。在 Javadoc 标准注释中，要描述类或者接口的作用。
 
 ~~~
-
 /*
  * Copyright (C) 2013 The Android Open Source Project 
  *
@@ -196,7 +180,6 @@ import java.sql.SQLException;
 public class Foo {
     ...
 }
-
 ~~~
 
 对于每个类和有价值的公共方法，你都应该为之书写一个 Javadoc 注释，该注释至少包含一句关于类或方法作用的描述。并且这个描述应该以第三人称描述性谓词开头。
@@ -204,24 +187,20 @@ public class Foo {
 示例：
 
 ~~~
-
 /** Returns the correctly rounded positive square root of a double value. */
 static double sqrt(double a) {
     ...
 }
-
 ~~~
 
 或者：
 
 ~~~
-
 /**
  * Constructs a new String by converting the specified array of 
  * bytes using the platform's default character encoding.
  */
 public String(byte[] bytes) 
-
 ~~~
 
 你并不需要为没价值的 get 或者 set 方法书写 Javadoc，比如，对于 setFoo() 方法，你在 Javadoc 中只能说设置了 Foo 的值。如果该方法所做的事情更加复杂（比如强制约束或者有一个重要的副作用），那你应该写一个 Javadoc。假设之前的例子中，Foo 这个属性的意思并不明确，那就该添加一个 Javadoc。
@@ -247,7 +226,6 @@ public String(byte[] bytes)
 这个规则的一个例外就是 try-catch 语句。如果一个变量初始化的时候，其初始值是一个抛出已检查异常的方法的返回值，它就必须在 try 语句内初始化。如果这个变量必须在 try 块之外被使用，那么它就要在 try 块之外声明，尽管在那里它并没有被合理地初始化：
 
 ~~~
-
 // 实例化类 cl，表示某种集合
 Set s = null;
 try {
@@ -260,13 +238,11 @@ try {
 
 // 运用这个集合
 s.addAll(Arrays.asList(args));
-
 ~~~
 
 但即使是这种情况也能通过把 try-catch 语句封装在一个方法中来避免：
 
 ~~~
-
 Set createSet(Class cl) {
     // 实例化的类cl，表示某种集合
     try {
@@ -283,27 +259,22 @@ Set createSet(Class cl) {
 // 运用这个集合
 Set s = createSet(cl);
 s.addAll(Arrays.asList(args));
-
 ~~~
 
 对于循环变量，除非有令人信服的理由，否则应该在 for 语句中声明：
 
 ~~~
-
 for (int i = 0; i < n; i++) {
     doSomething(i);
 }
-
 ~~~
 
 其他类型的循环变量：
 
 ~~~
-
 for (Iterator i = c.iterator(); i.hasNext(); ) {
     doSomethingElse(i.next());
 }
-
 ~~~
 
 ### 有序的引用语句
@@ -314,7 +285,7 @@ for (Iterator i = c.iterator(); i.hasNext(); ) {
 2. 第三方的引用
 3. java 和 javax 的引用
 
-为了更好地符合IDE的设置，这些引用语句应该是这样的：
+为了更好地符合 IDE 的设置，这些引用语句应该是这样的：
 
 - 每个分组按字母排序，其中大写字母放在小写字母前。（比如，Z 在 a 前面）
 - 每个主要的组之间应该用空行隔开（android, com, junit, net, org, java, javax）
@@ -339,19 +310,15 @@ for (Iterator i = c.iterator(); i.hasNext(); ) {
 语句换行的时候我们使用8个空格来缩进，包括方法的调用和赋值语句。例如，这样是正确的：
 
 ~~~
-
 Instrument i =
         someLongExpression(that, wouldNotFit, on, one, line);
-
 ~~~
 
 下面这样则是不正确的：
 
 ~~~
-
 Instrument i =
     someLongExpression(that, wouldNotFit, on, one, line);
-
 ~~~
 
 
@@ -365,7 +332,6 @@ Instrument i =
 例子如下：
 
 ~~~
-
 public class MyClass {
     public static final int SOME_CONSTANT = 42;
     public int publicField;
@@ -374,7 +340,6 @@ public class MyClass {
     private int mPrivate;
     protected int mProtected;
 }
-
 ~~~
 
 ### 使用标准的花括号风格
@@ -382,7 +347,6 @@ public class MyClass {
 花括号不单独占一行，应该放在和前面代码同一行的位置。就像下面这样：
 
 ~~~
-
 class MyClass {
     int func() {
         if (something) {
@@ -394,34 +358,27 @@ class MyClass {
         }
     }
 }
-
 ~~~
 
 我们需要在一个条件语句中使用括号。只有整个条件语句中只有一行代码，你才可以把他放在一行而不使用括号。就如下面这样是合法的：
 
 ~~~
-
 if (condition) {
     body(); 
 }
-
 ~~~
 
 而这样也是可行的：
 
 ~~~
-
 if (condition) body();
-
 ~~~
 
-不过，虾米那这样也是可以的：
+不过，那这样也是可以的：
 
 ~~~
-
 if (condition)
     body();  // 不推荐这样的风格
-
 ~~~
 
 ### 控制行的长度
@@ -440,18 +397,17 @@ if (condition)
 
 Java 预定义的三种标注在安卓中的标准用法如下：
 
-- @Deprecated. 当被标注的元素不鼓励使用的时候你必须使用 @Deprecated 标注，你还需要使用 Javadoc 添加 @deprecated 标记并且该标记应该用可选的名字实现。此外，请记住，@Deprecated 方法依旧是可以执行的。（对于以前的代码，如果有一个 Javadoc 的 @deprecated 标记，请为代码加入 @Deprecated 标注。
+- @Deprecated. 当被标注的元素不鼓励使用的时候你必须使用 @Deprecated 标注，你还需要使用 Javadoc 添加 @deprecated 标记并且该标记应该用可选的名字实现。此外，请记住，@Deprecated 方法依旧是可以执行的。  
+（对于以前的代码，如果有一个 Javadoc 的 @deprecated 标记，请为代码加入 @Deprecated 标注。
 - @Override. 当一个方法重写了其父类中的声明或者实现的时候，必须用 @Override 来注明。比如，如果你有一个方法有 Javadoc 的标记 @inheritdocs，并且是从一个类（不是接口）中派生而来的，你就必须再为方法添加 @Override 说明该方法重写了父类中的相关方法。
 - SuppressWarnings：@SuppressWarnings 标注应该只在无法消除警告的情况下使用。如果一个警告通过了“无法消除”的测试，那么 @SuppressWarnings 标注会被使用，以确保所有的警告都反映了代码中的实际问题。
 
 当必须使用 @SuppressWarnings 标注的时候，必须在其之前写一个 TODO 注释来说明“无法消除”的情况。这通常会标记出一个使用了一个比较尴尬的接口的违规类。例子如下：
 
 ~~~
-
 // TODO: The third-party class com.third.useful.Utility.rotate() needs generics 
 @SuppressWarnings("generic-cast")
 List<String> blix = Utility.rotate(blax);
-
 ~~~
 
 当需要 @SuppressWarnings 标注的时候，应该重构代码以隔离标注中使用的软件元素。
@@ -468,7 +424,7 @@ List<String> blix = Utility.rotate(blax);
 | String url | String URL |
 | long id | long ID |
 
-不论 JDK 还是 安卓的代码库都使用了首字母缩略词，因而他们是相当一致的，因此，想使自己的代码与他们一致是几乎不可能的。请咬紧牙关，尽量熟悉首字母缩略词。
+不论 JDK 还是安卓的代码库都使用了首字母缩略词，因而他们是相当一致的，因此，想使自己的代码与他们一致是几乎不可能的。请咬紧牙关，尽量熟悉首字母缩略词。
 
 ### 使用 TODO 注释
 
@@ -477,17 +433,13 @@ List<String> blix = Utility.rotate(blax);
 TODO 注释必须用大写的 TODO 开头，后面跟一个冒号：
 
 ~~~
-
 // TODO: Remove this code after the UrlTable2 has been checked in.
-
 ~~~
 
 或者：
 
 ~~~
-
 // TODO: Change this to use a flag instead of a constant.
-
 ~~~
 
 如果你的 TODO 语句是“在未来的某一时期做什么”的格式，请确保你包含了一个求具体的日期（2005年11月份）或者一个特定的事件（在所有产品开发者了解v7协议后删除此代码）。
@@ -499,18 +451,18 @@ TODO 注释必须用大写的 TODO 开头，后面跟一个冒号：
 - Error：这个等级的日志信息应该只在出现致命错误的时候使用，比如，有些事件会导致用户可见的结果并且如果不显示地删除数据，卸载应用，清理数据分区或者重新刷掉整个手机（可能更糟）的时候就无法修正该结果，这个级别的信息会一直记录下来。在向统计数据的服务器提交报告的时候，说明 ERROR 级别的日志中的情况通常是一种好的选择。
 - Warning：这个等级的日志信息应该在事情比较严重或者出现预期之外的结果时使用，比如，有些事件会导致用户可见的结果，但是通过一些显示的动作，就像是等待或重启应用程序的应用甚至于下载新版的应用程序或者重新启动设备，可以在不丢失数据的情况下恢复。这个级别的信息会一直记录下来。在向统计信息的服务器报告的时候，说明 WARNING 级别的日志信息也是会考虑的。
 - INFORMATIVE：这一级别的日志应当记录的是大多数人会感兴趣的信息。比如，当发现某种情况会造成广泛的影响时，尽管它不一定是错误，也应该记录。这种情况只应该由一个被认为在该域中是最具权威性（避免由非权威的组件做重复记录）的模块记录。始终记录该级别的日志信息。
-- DEBUG：这一级别的日志信息应该用于进一步说明在设备上发生了什么和调查及调试异常行为相关的事件。你应该只有在需要收集关于组件的足够信息的时候进行记录。如果你的调试日志是主要的日志信息，那你可能需要使用 verbose 日志记录。这一级别的日志应当记录，即时是在发行版中也应当用 if(LOCAL_LOG) 或者 if(LOCAL_LOGD) 代码块中来包含该日志。而在LOCAL_LOG[D] 中则定义你的类或者子组件，故而要禁用所有这类记录是有可能的。在 if(LOCAL_LOG) 块中不应当含有执行的逻辑，所有为日志而构建的字符串也应该放在 if(LOCAL_LOG) 块中。如果日志调用会导致字符串的构建发生在 if(LOCAL_LOG) 块之外，那么不应该把日志调用分散到函数调用中。还有些代码仍然使用 if(localLOGV)，这也是可接受的，尽管这个名称并不规范。
-- VERBOSE：这个级别的日志用于记录其他所有的信息，只会在调试版本中记录，并且应当包含在 if(LOCAL_LOGV)块中。故而它可以在默认情况下编译，任何因此构建的字符串在应当在 if(LOCAL_LOGV) 块中出现，并且在发行版中将会被剥离出来。
+- DEBUG：这一级别的日志信息应该用于进一步说明在设备上发生了什么和调查及调试异常行为相关的事件。你应该只有在需要收集关于组件的足够信息的时候进行记录。如果你的调试日志是主要的日志信息，那你可能需要使用 verbose 日志记录。这一级别的日志应当记录，即时是在发行版中也应当用 if(LOCAL_LOG) 或者 if (LOCAL_LOGD) 代码块中来包含该日志。而在 LOCAL_LOG[D] 中则定义你的类或者子组件，故而要禁用所有这类记录是有可能的。在 if(LOCAL_LOG) 块中不应当含有执行的逻辑，所有为日志而构建的字符串也应该放在 if(LOCAL_LOG) 块中。如果日志调用会导致字符串的构建发生在 if(LOCAL_LOG) 块之外，那么不应该把日志调用分散到函数调用中。还有些代码仍然使用 if(localLOGV)，这也是可接受的，尽管这个名称并不规范。
+- VERBOSE：这个级别的日志用于记录其他所有的信息，只会在调试版本中记录，并且应当包含在 if(LOCAL_LOGV) 块中。故而它可以在默认情况下编译，任何因此构建的字符串在应当在 if(LOCAL_LOGV) 块中出现，并且在发行版中将会被剥离出来。
 
 注意：
 
-- 在给定的模块中，出了 VERBOSE 级别以外，一个错误应该尽可能只报告一次。：在模块内的函数调用链，只有最内层的函数应当返回错误信息，并且同一模块内的调用者只应添加一些有助于分离问题的日志信息。
+- 在给定的模块中，除了 VERBOSE 级别以外，一个错误应该尽可能只报告一次 ：在模块内的函数调用链，只有最内层的函数应当返回错误信息，并且同一模块内的调用者只应添加一些有助于分离问题的日志信息。
 - 在一连串模块中，除了 VERBOSE 级别以外，当底层模块检测到的无效数据来自较高模块，并且只有在日志提供了调用者无法使用的信息的时候，低级别模块将记录这种情况到 DEBUG 日志。具体来说，没有必要在抛出异常的，或者被记录的信息被包含在错误信息中的时候，记录当时的情况（异常中应该会包括所有相关的信息）。这在框架和应用的交互间尤为重要，并且由第三方应用程序造成的情况能够由框架合理处理的时候，不应该触发高于 DEBUG 级别的记录。唯一能触发 INFORMATIVE 或者更高级别记录的情况应该是当模块或者应用在其本身的自别检测到错误，或者错误来自较低级别的时候。
 - 当有些日志记录可能会发生多次的时候，实施一些限制速率的机制来防止重复输出很多与副本相同（或者很相似）的日志信息是一个好方法。
 - 失去网络连接被一致认为且期望是不应该无理由记录的。在 app 内失去网络连接会出现的后果应当在 DEBUG 或者 VERBOSE 级别记录（根据后果是否足够严重并且超出预期的情况足够被记录在发行版中）。
 - 在一个文件系统中，一个可以使用或者代表第三方的完整文件系统不应该输出高于 INFORMAL 的日志。
 - 来自不信任源的无效数据（包括任何共享设备上的文件，或者通过网络连接取得的数据）被检测出无效的时候，我们认为且应当不触发任何高于 DEBUG 级别的日志记录。（甚至应该尽可能地限制日志记录）
-- 在心中记住，当对 String 对象使用+连接符的时候，会隐式地创建一个默认大小（16个字符）的 StringBuilder 对象，而且可能会有其他的临时 String 对象。比如，显示创建StringBuilder 的花销并不使用默认的‘+’操作符要大（而且事实上更加高效）。也请记住，即时没有读日志信息，调用 Log.v() 的代码，包括字符串的构建，是会被编译并且运行在发行版本中的。
+- 在心中记住，当对 String 对象使用+连接符的时候，会隐式地创建一个默认大小（16个字符）的 StringBuilder 对象，而且可能会有其他的临时 String 对象。比如，显示创建 StringBuilder 的花销并不使用默认的‘+’操作符要大（而且事实上更加高效）。也请记住，即时没有读日志信息，调用 Log.v() 的代码，包括字符串的构建，是会被编译并且运行在发行版本中的。
 - 任何用于给其他人看并且在发行版中也可用的日志，应当尽可能地简洁，并且应当是合理易懂的。这包括到 DEBUG 为止的全部日志。
 - 如果可能的话，有意义的的日志应该保持在单行内。单行的长度在80到100个字符内是完全可以被接受的，但是长度在130到160各字符也是可以接受的（包括标签的长度），只是应当尽量避免。
 - 报告成功的日志绝对不能使用高于 VERBOSE 级别的日志。
@@ -525,7 +477,7 @@ TODO 注释必须用大写的 TODO 开头，后面跟一个冒号：
 
 需要风格指南的关键是有一个共同的代码词汇表，于是人们可以专注于你所说的内容，而不是你说话的方式。我们提出了整体的风格规范，所以人们知道这个专业词汇表。但是局部的风格也是很重要的，如果你在文件中加入的代码看起来和周围代码明显不同，那么读者读到这里的时候，这些代码会使他们的节奏被打断，这应当尽量避免。
 
-## Javatests 风格规范。
+## Javatests 风格规范
 
 ### 遵循测试方法的命名便捷性
 
@@ -534,7 +486,6 @@ TODO 注释必须用大写的 TODO 开头，后面跟一个冒号：
 例如：
 
 ~~~
-
 testMethod_specificCase1 testMethod_specificCase2
 
 void testIsDistinguishable_protanopia() {
@@ -542,5 +493,4 @@ void testIsDistinguishable_protanopia() {
     assertFalse(colorMatcher.isDistinguishable(Color.RED, Color.BLACK))
     assertTrue(colorMatcher.isDistinguishable(Color.X, Color.Y))
 }
-
 ~~~

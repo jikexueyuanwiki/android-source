@@ -2,7 +2,7 @@
 
 这一篇补充说明主页上有关[构建和运行](https://source.android.com/source/building-running.html)中运行在特殊设备上的信息。
 
-通过当前已经发放的版本，可以给 Nexus 4，Nexus 7 以及一些 Galaxy Nexus 的变异版本的手机上构建的。每一个设备的具体实用性水平，取决于硬件所属的二进制文件。
+通过当前已经发放的版本，可以在 Nexus 4，Nexus 7 以及一些 Galaxy Nexus 的变异版本的手机上构建。每一个设备的具体实用性水平，取决于硬件所属的二进制文件。
 
 给 Nexus 4 和 Nexus 7，所有的配置都可以使用，并且所有的硬件都可以工作。由于硬件的不同，不要在 Nexus 7 上使用 4.1.1，它已经被 4.1.2 以及后续的版本所取代。
 
@@ -62,6 +62,7 @@ $ make fastboot adb
 ```
 $ fastboot oem unlock
 ```
+
 程序必须确认在屏幕上，并且出于隐私原因将会删除用户数据。这只需要执行一次即可。
 
 所有数据都被删除，也就是说不仅仅是应用程序的私有数据，还包括那些可以通过 USB 轻易获取的公共数据，其中包含照片和电影，都会被删除。请在解锁 bootloader 之前，确认重要的数据是否都做了备份。
@@ -105,7 +106,7 @@ $ make clobber
 
 匹配和构建 Android 开源工程的步骤被写在了 [Building](https://source.android.com/source/building.html)上。
 
-通过登录菜单，给大多数设备推荐的 builds ，当运行无参数 *lunch* 命令时是可以运行的。适配 Nexus 的工厂图片和二进制数据可以在这里下载：
+通过登录菜单，给大多数设备推荐的 builds，当运行无参数 *lunch* 命令时是可以运行的。适配 Nexus 的工厂图片和二进制数据可以在这里下载：
 
 [https://developers.google.com/android/nexus/images](https://developers.google.com/android/nexus/images)
 
@@ -135,9 +136,9 @@ $ make clobber
 
 ## 设备刷入系统
 
-如果有必要请将设备设置成 fastboot 模式（详情请看上文）
+如果有必要请将设备设置成 fastboot 模式（详情请看上文）。
 
-一个完整的 Android 系统可以用一条命令来给设备刷入一个系统：在经过核对被写入的系统已经成功的和已经安装过的 bootloader ，广播之间可以相互协作后，会将启动，修复，系统三个部分写在一块，最后重启系统。这样的操作也会清楚用户数据，就跟之前在 *fastboot oem unlock* 中提到的差不多。
+一个完整的 Android 系统可以用一条命令来给设备刷入一个系统：在经过核对被写入的系统已经成功的和已经安装过的 bootloader，广播之间可以相互协作后，会将启动，修复，系统三个部分写在一块，最后重启系统。这样的操作也会清楚用户数据，就跟之前在 *fastboot oem unlock* 中提到的差不多。
 
 ```
 $ fastboot -w flashall
